@@ -20,6 +20,7 @@ Thứ tự script (`index.html` cuối body):
 Chuỗi phụ thuộc: `properties → ui → listings → favorites → filters → compare → detail → inquiry → main`.
 `window.UI`, `window.Listings`, `window.Favorites`, `window.Filters`, `window.Compare`,
 `window.Detail`, `window.Inquiry` gán tại parse-time (cuối IIFE).
+`window.Detail` gồm `openProperty(id)`, `closeDetail()`, `syncRoute()`.
 
 ## Đã hoàn thành
 
@@ -80,6 +81,23 @@ Chuỗi phụ thuộc: `properties → ui → listings → favorites → filters
   (specificity (0,2,0) + !important). JS so sánh (`panel.hidden`) & inquiry (`modal.hidden`) không đổi.
 - Verify: `node --check` sạch; smoke test vm vẫn pass; grep CSS xác nhận rule nằm cuối file, CSS cũ không đổi.
 
+### 4. Routing detail: pushState + syncRoute (Back/Forward đồng bộ)
+- Trước: `Detail.openProperty()` dùng `history.replaceState` → mở căn không tạo history entry,
+  Back/Forward + hash `#property=<id>` không đồng bộ.
+- Sau (trong `js/detail.js`, tách 3 trách nhiệm):
+  - `showDetail(p)` / `showHome()` — chỉ render/đổi view, KHÔNG ghi history; `showHome()` khôi phục
+    `lastScroll` (lưu khi mở detail từ list).
+  - `openProperty(id)` — user click card → `history.pushState(pathname + search + "#property=<id>")`
+    (giữ query filter/search/sort); fallback `replaceState`; không ghi đè `lastScroll` nếu đang ở detail.
+  - `closeDetail()` — nút "Quay lại" → `pushState(pathname + search)` (bỏ hash) + `showHome()`;
+    nếu home đang hiện (nav-link/anchor) chỉ `replaceState` xoá hash + giữ hành vi scroll cũ.
+  - `syncRoute()` — đọc `location.hash`, `Listings.byId`, render detail/home tương ứng; KHÔNG ghi history
+    (không lặp entry/loop). Gắn `popstate` + `hashchange`; gọi 1 lần ở init.
+- `js/main.js`: BỎ đoạn init đọc hash cũ; delegation card/keydown/Enter vẫn gọi `D.openProperty(id)`.
+- Verify `verify_integration.js` (thêm test): push URL giữ query + hash; Back → home giữ filter, khôi
+  phục scroll (0,640); Forward → mở đúng căn; nút back tạo entry home (query không mất) rồi Browser
+  Back mở lại detail; hash thủ công đồng bộ; hash id lỗi → home (không trắng màn); không lặp history.
+
 ## Còn lại — Ưu tiên 2: Vòng "quality polish" (từng được yêu cầu, chưa làm)
 Breadcrumb có "Khám phá"; back button giữ nguyên bộ lọc; thẻ quick-facts; feature-grid 3/2/1 col;
 sticky summary chỉ ≥1024px; nút trái tim toggle + toast (đã có toggle, còn toast copy);
@@ -94,7 +112,10 @@ results count theo ngữ cảnh lọc (đã theo list dài, còn empty state). �
 - `price` là chuỗi; sort giá phải parse `parseFloat(price.replace(/[^\d.,]/g,"").replace(",","."))`.
 
 ## Cách verify khi làm tiếp
-1. `node --check js/*.js js/data/*.js`
+1. Syntax (PowerShell không mở rộng glob — chạy từng file): `node --check js\data\properties.js`,
+   `node --check js\ui.js`, `node --check js\listings.js`, `node --check js\favorites.js`,
+   `node --check js\filters.js`, `node --check js\compare.js`, `node --check js\detail.js`,
+   `node --check js\inquiry.js`, `node --check js\main.js`; sau đó `git diff --check`.
 2. `node C:\SQL_SE~1\opencode\verify_listings.js`
 3. `node C:\SQL_SE~1\opencode\verify_integration.js` (cập nhật nếu thêm module/ID mới)
 4. Grep: không còn tham chiếu module cũ sót; `properties.js` & CSS cũ không đổi nội dung.

@@ -221,13 +221,8 @@
         });
 
         /* =====================================================
-           Init + hash routing
+           Init (routing qua syncRoute trong js/detail.js)
         ===================================================== */
         renderTeasers(slidesData[0].ids);
-
-        var hashMatch = location.hash.match(/^#property=(.+)$/);
-        if (hashMatch) {
-            D.openProperty(decodeURIComponent(hashMatch[1]));
-        }
     });
 })();

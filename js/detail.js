@@ -140,26 +140,69 @@
             UI.dispatch("list:rendered");
         }
 
-        function openProperty(id) {
-            var p = L.byId(id);
-            if (!p) return;
-            currentId = id;
-            lastScroll = window.scrollY;
+        function showDetail(p) {
+            currentId = p.id;
+            renderDetail(p);
             homeView.hidden = true;
             detailView.hidden = false;
-            renderDetail(p);
-            if (history.replaceState) history.replaceState(null, "", "#property=" + id);
             window.scrollTo(0, 0);
         }
 
-        function closeDetail() {
+        function showHome() {
             detailView.hidden = true;
             homeView.hidden = false;
-            if (history.replaceState) history.replaceState(null, "", location.pathname + location.search);
-            window.scrollTo(0, lastScroll);
+            if (lastScroll) window.scrollTo(0, lastScroll);
+        }
+
+        function openProperty(id) {
+            var p = L.byId(id);
+            if (!p) return;
+            var target = location.pathname + location.search + "#property=" + id;
+            if (location.hash !== "#property=" + id) {
+                if (homeView.hidden === false) lastScroll = window.scrollY;
+                if (history.pushState) {
+                    history.pushState(null, "", target);
+                } else if (history.replaceState) {
+                    history.replaceState(null, "", target);
+                }
+            }
+            showDetail(p);
+        }
+
+        function closeDetail() {
+            if (homeView.hidden === false) {
+                if (location.hash && history.replaceState) {
+                    history.replaceState(null, "", location.pathname + location.search);
+                }
+                window.scrollTo(0, lastScroll);
+                return;
+            }
+            var url = location.pathname + location.search;
+            if (history.pushState) {
+                history.pushState(null, "", url);
+            } else if (history.replaceState) {
+                history.replaceState(null, "", url);
+            }
+            showHome();
+        }
+
+        function syncRoute() {
+            var match = location.hash.match(/^#property=(.+)$/);
+            var id = match ? decodeURIComponent(match[1]) : null;
+            var p = id ? L.byId(id) : null;
+            if (p) {
+                if (!detailView.hidden && currentId === p.id) return;
+                showDetail(p);
+            } else {
+                if (detailView.hidden) return;
+                showHome();
+            }
         }
 
         document.getElementById("detailBack").addEventListener("click", closeDetail);
+        window.addEventListener("popstate", syncRoute);
+        window.addEventListener("hashchange", syncRoute);
+        syncRoute();
 
         document.getElementById("dtInterest").addEventListener("click", function () {
             if (window.Inquiry) {
@@ -177,7 +220,8 @@
         ===================================================== */
         window.Detail = {
             openProperty: openProperty,
-            closeDetail: closeDetail
+            closeDetail: closeDetail,
+            syncRoute: syncRoute
         };
     });
 })();
