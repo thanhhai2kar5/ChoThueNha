@@ -267,6 +267,20 @@ Chuỗi phụ thuộc: `properties → ui → listings → favorites → filters
 - Reuse `favorites:changed` để unsave trong saved view re-render ngay (không đụng Favorites).
 - Trạng thái: **in progress, awaiting review** — chưa commit. (Cập nhật sau review Live Server desktop + 390px.)
 
+### 10. Feature: Compare experience — bảng so sánh hữu ích cho 2–3 căn (ĐANG LÀM, chờ review — CHƯA COMMIT)
+- Giữ nguyên Compare state/MAX=3/bar/panel/ROWS/dữ liệu thật; không thêm storage/backend/data.
+- 1 căn: bar vẫn hiện, "So sánh" không mở panel (toast cũ "Chọn ít nhất 2 căn để so sánh.").
+- Panel: title "So sánh các không gian" + desc + count + toggle "Chỉ hiện khác biệt" (aria-pressed) + close.
+- Summary row "Điểm cần so sánh": chip "Giá thuê thấp nhất" + "Diện tích lớn nhất" từ giá trị thật,
+  hiển thị giá trị + tên căn (nối khi bằng nhau); không gắn nhãn "tốt nhất"/score/review.
+- Diff-only ON: ẩn row không-key khi mọi giá trị hiển thị giống nhau; LUÔN giữ header, summary, Giá thuê,
+  Diện tích, controls. Cell khác ít nhất 1 căn → nền accent nhẹ (.cmp-diff).
+- Header row: image + tên + remove + nút "Xem chi tiết" (gọi Detail.openProperty, đóng panel trước).
+- A11y: panel card role=dialog aria-modal aria-labelledby tabindex=-1; Escape đóng; close/escape trả focus
+  về opener; focus trap Tab trong panel; controls ≥44px tap.
+- Responsive: bọc .compare-table-scroll (overflow-x auto, label cột sticky left), không tràn viewport;
+  panel có bottom padding trên mobile.
+
 ## Còn lại — Ưu tiên 2: Vòng "quality polish" (từng được yêu cầu, chưa làm)
 Breadcrumb có "Khám phá"; back button giữ nguyên bộ lọc; thẻ quick-facts;
 nút trái tim toggle + toast (đã có toggle, còn toast copy);

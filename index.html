@@ -551,12 +551,24 @@
 
     <div class="compare-panel" id="comparePanel" hidden>
         <div class="compare-panel-backdrop" data-compare-close></div>
-        <div class="compare-panel-card">
-            <div class="compare-panel-head">
-                <h2>So sánh bất động sản</h2>
-                <button class="compare-panel-close" id="compareClose" aria-label="Đóng bảng so sánh">&times;</button>
+        <div class="compare-panel-card" role="dialog" aria-modal="true" aria-labelledby="comparePanelTitle" tabindex="-1">
+            <div class="compare-panel-sticky">
+                <div class="compare-panel-head">
+                    <div class="compare-panel-title-wrap">
+                        <h2 id="comparePanelTitle">So sánh các không gian</h2>
+                        <p class="compare-panel-desc">So sánh trực tiếp dựa trên dữ liệu thực của các căn bạn đã chọn.</p>
+                        <span class="compare-panel-count" id="comparePanelCount"></span>
+                    </div>
+                    <div class="compare-panel-actions">
+                        <button type="button" class="compare-diff-toggle" id="compareDiffToggle" aria-pressed="false">Chỉ hiện khác biệt</button>
+                        <button class="compare-panel-close" id="compareClose" aria-label="Đóng bảng so sánh">&times;</button>
+                    </div>
+                </div>
+                <div class="compare-summary" id="compareSummary"></div>
             </div>
-            <div class="compare-table" id="compareTable"></div>
+            <div class="compare-table-scroll">
+                <div class="compare-table" id="compareTable"></div>
+            </div>
         </div>
     </div>
 
