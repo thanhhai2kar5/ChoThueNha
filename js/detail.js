@@ -72,6 +72,10 @@
         var dtDesc = document.getElementById("dtDesc");
         var dtFeatures = document.getElementById("dtFeatures");
         var dtNearby = document.getElementById("dtNearby");
+        var dtMapFrame = document.getElementById("dtMapFrame");
+        var dtMapLink = document.getElementById("dtMapLink");
+        var dtMapCopy = document.getElementById("dtMapCopy");
+        var dtMapNote = document.getElementById("dtMapNote");
         var dtSimilar = document.getElementById("dtSimilar");
         var dtSavedState = document.getElementById("dtSavedState");
         var dtVisitState = document.getElementById("dtVisitState");
@@ -174,6 +178,21 @@
             dtNearby.innerHTML = p.nearby.map(function (n) {
                 return "<li>" + L.PIN_SVG + " " + n + "</li>";
             }).join("");
+
+            var mapQuery = encodeURIComponent(p.location + ", Huế, Việt Nam");
+            if (dtMapFrame) {
+                dtMapFrame.src = "https://www.google.com/maps?q=" + mapQuery + "&output=embed";
+                dtMapFrame.title = "Bản đồ khu vực " + p.name;
+            }
+            if (dtMapLink) {
+                dtMapLink.href = "https://www.google.com/maps/search/?api=1&query=" + mapQuery;
+            }
+            if (dtMapCopy) {
+                dtMapCopy.textContent = "Khu vực tham khảo: " + p.location + ".";
+            }
+            if (dtMapNote) {
+                dtMapNote.textContent = "Bản đồ chỉ thể hiện khu vực tham khảo, không phải vị trí chính xác của căn. Địa điểm thực tế nên được xác nhận khi xem nhà.";
+            }
 
             dtSimilar.innerHTML = getSimilar(p).map(L.cardHTML).join("");
 

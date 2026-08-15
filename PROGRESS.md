@@ -322,6 +322,15 @@ Chuỗi phụ thuộc: `properties → ui → listings → favorites → filters
   visit-schedule.js sau save/cancel) → updateMyState nếu detail đang mở; không poll localStorage,
   không re-render gallery/scroll.
 - Giữ nguyên: gallery, breadcrumb, routing/hash, compare, inquiry, visit, dữ liệu properties.
+- **Patch bản đồ khu vực**: `detail-map-card` nằm TRONG aside phải, dưới `#detail-ctas` (thay vì cột nội dung
+  dưới), đúng một map duy nhất; giữ nguyên id `dtMapFrame/dtMapLink/dtMapCopy` + query generation +
+  link Google Maps. iframe embed `https://www.google.com/maps?q=<encodeURIComponent(location + ", Huế, Việt Nam")>&output=embed`,
+  `title` "Bản đồ khu vực <tên>", `loading="lazy"`, `referrerpolicy="no-referrer"`. Copy 1 dòng
+  "Khu vực tham khảo: <location>."; disclaimer đầy đủ đặt nhỏ `.map-note` (#dtMapNote) "Bản đồ chỉ thể
+  hiện khu vực tham khảo... xác nhận khi xem nhà" (textContent). Link ngoài "Mở Maps ↗"
+  `https://www.google.com/maps/search/?api=1&query=<encoded>` target=_blank rel noopener noreferrer.
+  Khung map 240px trong aside (≤767px vẫn 240px, full-width), không sticky riêng → không chồng header/compare bar.
+  Dưới (content column): "Khu vực xung quanh" → "Checklist" liền nhau, bỏ gap trống.
 - Trạng thái: **in progress, awaiting review** — chưa commit. (Cập nhật sau review Live Server desktop + 390px.)
 
 ### 13. Feature: Living Collections (Bộ sưu tập theo nhu cầu sống) (ĐANG LÀM, chờ review — CHƯA COMMIT)
