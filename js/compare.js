@@ -57,9 +57,11 @@
         if (!bar) return;
         if (selected.length === 0) {
             bar.hidden = true;
+            document.body.classList.remove("compare-bar-active");
             return;
         }
         bar.hidden = false;
+        document.body.classList.add("compare-bar-active");
         countEl.textContent = String(selected.length);
         listEl.innerHTML = "";
         selected.forEach(function (id) {

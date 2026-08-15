@@ -11,9 +11,10 @@
     "use strict";
 
     var L;
-    var searchInput, sortSelect, chipsWrap;
+    var searchInput, sortSelect, chipsWrap, priceWrap;
     var q = "";
     var sort = "default";
+    var priceRange = "";
     var savedView = false;
     var debounceTimer;
 
@@ -33,6 +34,33 @@
         beds_desc: "Nhiều phòng ngủ nhất"
     };
 
+    var PRICE_RANGES = [
+        { value: "under_10", label: "Dưới 10 triệu", lt: 10 },
+        { value: "10_15", label: "10 – 15 triệu", gte: 10, lte: 15 },
+        { value: "15_20", label: "15 – 20 triệu", gt: 15, lte: 20 },
+        { value: "20_30", label: "20 – 30 triệu", gt: 20, lte: 30 },
+        { value: "over_30", label: "Trên 30 triệu", gt: 30 }
+    ];
+
+    function priceRangeByValue(value) {
+        for (var i = 0; i < PRICE_RANGES.length; i++) {
+            if (PRICE_RANGES[i].value === value) return PRICE_RANGES[i];
+        }
+        return null;
+    }
+
+    function matchesPriceRange(p) {
+        if (!priceRange) return true;
+        var r = priceRangeByValue(priceRange);
+        if (!r) return true;
+        var v = priceNum(p);
+        if (r.gte != null && v < r.gte) return false;
+        if (r.gt != null && v <= r.gt) return false;
+        if (r.lte != null && v > r.lte) return false;
+        if (r.lt != null && v >= r.lt) return false;
+        return true;
+    }
+
     function priceNum(p) {
         var n = parseFloat(String(p.price).replace(/[^\d.,]/g, "").replace(",", "."));
         return isNaN(n) ? 0 : n;
@@ -48,7 +76,9 @@
 
     function apply(scroll) {
         var base = savedView ? window.Favorites.getList() : L.getBaseList();
-        var list = base.filter(matchQuery);
+        var list = base.filter(function (p) {
+            return matchQuery(p) && matchesPriceRange(p);
+        });
         if (sort !== "default") {
             var fns = {
                 price_asc: function (a, b) { return priceNum(a) - priceNum(b); },
@@ -61,6 +91,7 @@
         }
         L.renderList(list);
         renderChips();
+        renderPriceButtons();
         syncUrl();
         if (scroll) {
             var ds = document.getElementById("danh-sach");
@@ -101,9 +132,29 @@
         apply(false);
     }
 
+    function setPriceRange(value) {
+        if (priceRange === value || !priceRangeByValue(value)) {
+            priceRange = "";
+        } else {
+            priceRange = value;
+        }
+        apply(false);
+    }
+
+    function renderPriceButtons() {
+        if (!priceWrap) return;
+        var btns = priceWrap.querySelectorAll("[data-price-range]");
+        btns.forEach(function (btn) {
+            var on = btn.getAttribute("data-price-range") === priceRange;
+            btn.classList.toggle("active", on);
+            btn.setAttribute("aria-pressed", on ? "true" : "false");
+        });
+    }
+
     function clearAll() {
         q = "";
         sort = "default";
+        priceRange = "";
         savedView = false;
         if (searchInput) searchInput.value = "";
         if (sortSelect) sortSelect.value = "default";
@@ -125,6 +176,10 @@
         }
         if (q) chips.push({ label: "Tìm: “" + UI.esc(q) + "”", clear: function () { setSearch(""); } });
         if (sort !== "default") chips.push({ label: SORT_LABELS[sort], clear: function () { setSort("default"); } });
+        if (priceRange) {
+            var pr = priceRangeByValue(priceRange);
+            if (pr) chips.push({ label: "Ngân sách: " + pr.label, clear: function () { setPriceRange(priceRange); } });
+        }
 
         chips.forEach(function (c) {
             var el = document.createElement("button");
@@ -152,6 +207,7 @@
         var kind = savedView ? "saved" : (st.special || (st.cat && st.cat !== "all" ? st.cat : ""));
         if (kind) params.set("filter", kind); else params.delete("filter");
         if (sort !== "default") params.set("sort", sort); else params.delete("sort");
+        if (priceRange) params.set("price", priceRange); else params.delete("price");
         var qs = params.toString();
         history.replaceState(null, "", location.pathname + (qs ? "?" + qs : "") + location.hash);
     }
@@ -162,6 +218,7 @@
         if (searchInput) searchInput.value = q;
         sort = SORT_LABELS[params.get("sort")] ? params.get("sort") : "default";
         if (sortSelect) sortSelect.value = sort;
+        priceRange = priceRangeByValue(params.get("price")) ? params.get("price") : "";
         var kind = params.get("filter");
         if (kind === "saved") {
             savedView = true;
@@ -177,6 +234,7 @@
         searchInput = document.getElementById("searchInput");
         sortSelect = document.getElementById("sortSelect");
         chipsWrap = document.getElementById("activeChips");
+        priceWrap = document.getElementById("priceRangeGroup");
 
         if (searchInput) {
             searchInput.addEventListener("input", function () {
@@ -197,6 +255,12 @@
             if (cl) {
                 e.preventDefault();
                 clearAll();
+                return;
+            }
+            var pr = e.target.closest ? e.target.closest("[data-price-range]") : null;
+            if (pr) {
+                e.preventDefault();
+                setPriceRange(pr.getAttribute("data-price-range"));
             }
         });
 
@@ -216,9 +280,10 @@
         setCategory: setCategory,
         setSearch: setSearch,
         setSort: setSort,
+        setPriceRange: setPriceRange,
         clearAll: clearAll,
         getState: function () {
-            return { q: q, sort: sort, savedView: savedView };
+            return { q: q, sort: sort, priceRange: priceRange, savedView: savedView };
         }
     };
 })();

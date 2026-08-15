@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="ChoThuêNhà — Bộ sưu tập không gian sống được tuyển chọn tại Huế: căn hộ cao cấp và villa riêng tư.">
-    <title>ChoThuêNhà — Không gian được tuyển chọn tại Huế</title>
+    <meta name="description" content="Hue Stay Marketplace — Bộ sưu tập không gian sống được tuyển chọn tại Huế: căn hộ cao cấp và villa riêng tư.">
+    <title>Hue Stay Marketplace — Không gian được tuyển chọn tại Huế</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -21,14 +21,14 @@
 
     <header class="header" id="siteHeader">
         <div class="container header-inner">
-            <a href="#kham-pha" class="logo">ChoThuê<span>Nhà</span></a>
+            <a href="#kham-pha" class="logo">Hue<span>Stay</span></a>
 
             <nav class="nav" id="mainNav">
                 <ul class="nav-list">
                     <li><a href="#kham-pha" class="nav-link active"><i class="nav-dot"></i>Khám phá</a></li>
                     <li><a href="#can-ho" class="nav-link"><i class="nav-dot"></i>Căn hộ</a></li>
                     <li><a href="#villa" class="nav-link"><i class="nav-dot"></i>Villa</a></li>
-                    <li><a href="#kham-pha" class="nav-link"><i class="nav-dot"></i>Về Huế Home</a></li>
+                    <li><a href="#danh-sach" class="nav-link"><i class="nav-dot"></i>Danh sách</a></li>
                 </ul>
             </nav>
 
@@ -88,16 +88,36 @@
                         <div class="hero-controls">
                             <span class="hero-count" id="heroCount">01 / 03</span>
                             <div class="hero-nav">
-                                <button class="control prev" id="prevSlide" aria-label="Slide trước">
+                                <button class="control" id="prevSlide" aria-label="Slide trước">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
                                 </button>
                                 <div class="dots" id="dots"></div>
-                                <button class="control next" id="nextSlide" aria-label="Slide sau">
+                                <button class="control" id="nextSlide" aria-label="Slide sau">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
                                 </button>
                             </div>
                         </div>
                     </aside>
+                </div>
+
+                <div class="search-hub">
+                    <div class="search-hub-card">
+                        <div class="search-hub-field">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                            <input type="search" id="searchInput" placeholder="Tìm theo tên, khu vực, tiện ích..." aria-label="Tìm kiếm căn">
+                        </div>
+                        <div class="search-hub-field">
+                            <select id="sortSelect" aria-label="Sắp xếp danh sách">
+                                <option value="default">Khuyến nghị</option>
+                                <option value="price_asc">Giá thấp → cao</option>
+                                <option value="price_desc">Giá cao → thấp</option>
+                                <option value="area_asc">Diện tích nhỏ → lớn</option>
+                                <option value="area_desc">Diện tích lớn → nhỏ</option>
+                                <option value="beds_desc">Nhiều phòng ngủ nhất</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-coral" type="button" data-filter="all">Tìm không gian</button>
+                    </div>
                 </div>
             </div>
         </section>
@@ -289,21 +309,14 @@
                     <button class="tab" data-cat="Sắp trống" role="tab" aria-selected="false">Sắp trống</button>
                 </div>
 
-                <div class="list-toolbar">
-                    <div class="list-search">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                        <input type="search" id="searchInput" placeholder="Tìm theo tên, khu vực, tiện ích..." aria-label="Tìm kiếm căn">
-                    </div>
-                    <div class="list-sort">
-                        <label for="sortSelect">Sắp xếp</label>
-                        <select id="sortSelect" aria-label="Sắp xếp danh sách">
-                            <option value="default">Khuyến nghị</option>
-                            <option value="price_asc">Giá thấp → cao</option>
-                            <option value="price_desc">Giá cao → thấp</option>
-                            <option value="area_asc">Diện tích nhỏ → lớn</option>
-                            <option value="area_desc">Diện tích lớn → nhỏ</option>
-                            <option value="beds_desc">Nhiều phòng ngủ nhất</option>
-                        </select>
+                <div class="budget-group" id="priceRangeGroup" role="group" aria-label="Lọc theo ngân sách thuê / tháng">
+                    <span class="budget-label">Ngân sách thuê / tháng</span>
+                    <div class="budget-options">
+                        <button type="button" class="budget-pill" data-price-range="under_10" aria-pressed="false">Dưới 10 triệu</button>
+                        <button type="button" class="budget-pill" data-price-range="10_15" aria-pressed="false">10 – 15 triệu</button>
+                        <button type="button" class="budget-pill" data-price-range="15_20" aria-pressed="false">15 – 20 triệu</button>
+                        <button type="button" class="budget-pill" data-price-range="20_30" aria-pressed="false">20 – 30 triệu</button>
+                        <button type="button" class="budget-pill" data-price-range="over_30" aria-pressed="false">Trên 30 triệu</button>
                     </div>
                 </div>
 
@@ -368,9 +381,39 @@
         <section class="concierge">
             <div class="container concierge-inner">
                 <h2>Chưa rõ căn nào hợp với bạn?</h2>
-                <a href="#danh-sach" class="btn btn-coral btn-lg" data-filter="all">Bắt đầu hành trình 60 giây</a>
+                <a href="#danh-sach" class="btn btn-coral btn-lg" data-filter="all">Khám phá không gian phù hợp</a>
             </div>
         </section>
+
+        <footer class="footer">
+            <div class="container footer-inner">
+                <div class="footer-brand">
+                    <a href="#kham-pha" class="logo">Hue<span>Stay</span></a>
+                    <p>Hue Stay Marketplace — bộ sưu tập căn hộ và villa cho thuê dài hạn tại Huế. Không gian được tuyển chọn, thông tin minh bạch.</p>
+                </div>
+                <div>
+                    <h4>Khám phá</h4>
+                    <div class="footer-links">
+                        <a href="#kham-pha">Trang chủ</a>
+                        <a href="#can-ho">Căn hộ</a>
+                        <a href="#villa">Villa &amp; nhà vườn</a>
+                        <a href="#danh-sach">Toàn bộ danh sách</a>
+                    </div>
+                </div>
+                <div>
+                    <h4>Hỗ trợ</h4>
+                    <div class="footer-links">
+                        <a href="#danh-sach" data-filter="available">Căn đang trống</a>
+                        <a href="#danh-sach" data-filter="saved">Căn đã lưu</a>
+                        <a href="#danh-sach" data-filter="family">Không gian gia đình</a>
+                        <a href="#danh-sach" data-filter="center">Gần trung tâm</a>
+                    </div>
+                </div>
+                <div class="footer-note">
+                    Bản demo frontend — biểu mẫu và các tính năng không gửi dữ liệu thật. Ảnh minh họa từ Unsplash.
+                </div>
+            </div>
+        </footer>
     </main>
 
     <section class="detail" id="detailView" hidden>
