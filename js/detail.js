@@ -211,6 +211,13 @@
                 UI.toast("Tính năng liên hệ đang được hoàn thiện.");
             }
         });
+        document.getElementById("dtVisit").addEventListener("click", function () {
+            if (window.VisitSchedule) {
+                window.VisitSchedule.open(currentId);
+            } else {
+                UI.toast("Tính năng lịch xem đang được hoàn thiện.");
+            }
+        });
         document.getElementById("dtShare").addEventListener("click", function () {
             UI.toast("Tính năng liên hệ đang được hoàn thiện.");
         });

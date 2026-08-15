@@ -31,6 +31,11 @@
                     <span class="fav-toggle-label">Đã lưu</span>
                     <span class="fav-count" id="favCount">0</span>
                 </button>
+                <button class="fav-toggle visit-toggle" id="visitToggle" aria-label="Xem lịch xem nhà">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"></rect><path d="M16 2v4"></path><path d="M8 2v4"></path><path d="M3 10h18"></path></svg>
+                    <span class="fav-toggle-label">Lịch xem</span>
+                    <span class="fav-count visit-count" id="visitCount">0</span>
+                </button>
                 <a href="#danh-sach" class="btn btn-coral btn-cta" data-filter="available">
                     <span class="cta-full">Xem căn đang trống</span>
                     <span class="cta-short">Căn trống</span>
@@ -508,6 +513,7 @@
 
                     <div class="detail-ctas">
                         <button class="btn btn-coral" id="dtInterest">Quan tâm căn này</button>
+                        <button class="btn btn-outline" id="dtVisit">Đặt lịch xem</button>
                         <button class="btn btn-outline" id="dtShare">Chia sẻ</button>
                     </div>
                 </aside>
@@ -604,6 +610,55 @@
         </div>
     </div>
 
+    <div class="inquiry visit-modal" id="visitModal" hidden>
+        <div class="inquiry-backdrop" data-visit-close></div>
+        <div class="inquiry-card visit-card" role="dialog" aria-modal="true" aria-labelledby="visitTitle" tabindex="-1">
+            <button class="inquiry-close" data-visit-close aria-label="Đóng">&#10005;</button>
+            <h2 id="visitTitle">Chọn lịch xem nhà</h2>
+            <p class="visit-local-note">Lịch được lưu riêng trên thiết bị này; chưa gửi yêu cầu đặt lịch.</p>
+            <div class="visit-property">
+                <span class="visit-property-name" id="visitPropertyName"></span>
+                <span class="visit-property-price" id="visitPropertyPrice"></span>
+            </div>
+            <div class="field">
+                <label for="visitDate">Chọn ngày xem</label>
+                <input type="date" id="visitDate">
+            </div>
+            <div class="visit-slots" role="group" aria-label="Chọn khung giờ xem">
+                <button type="button" class="visit-slot" data-visit-time="09:00–10:00" aria-pressed="false">09:00–10:00</button>
+                <button type="button" class="visit-slot" data-visit-time="10:30–11:30" aria-pressed="false">10:30–11:30</button>
+                <button type="button" class="visit-slot" data-visit-time="14:00–15:00" aria-pressed="false">14:00–15:00</button>
+                <button type="button" class="visit-slot" data-visit-time="16:00–17:00" aria-pressed="false">16:00–17:00</button>
+            </div>
+            <div class="visit-actions">
+                <button type="button" class="btn btn-coral" data-visit-save>Lưu lịch xem</button>
+                <button type="button" class="btn btn-outline" data-visit-close>Đóng</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="inquiry visit-modal" id="visitListModal" hidden>
+        <div class="inquiry-backdrop" data-visit-list-close></div>
+        <div class="inquiry-card visit-card" role="dialog" aria-modal="true" aria-labelledby="visitListTitle" tabindex="-1">
+            <button class="inquiry-close" data-visit-list-close aria-label="Đóng">&#10005;</button>
+            <h2 id="visitListTitle">Lịch xem của bạn</h2>
+            <p class="visit-local-note">Lịch được lưu riêng trên thiết bị này; chưa gửi yêu cầu đặt lịch.</p>
+            <div id="visitListContent"></div>
+            <div class="visit-confirm" id="visitConfirm" hidden>
+                <div class="visit-confirm-scrim" data-visit-confirm-close></div>
+                <div class="visit-confirm-card" role="dialog" aria-modal="true" aria-labelledby="visitConfirmTitle">
+                    <button class="inquiry-close" data-visit-confirm-close aria-label="Đóng">&#10005;</button>
+                    <h3 id="visitConfirmTitle">Hủy lịch xem?</h3>
+                    <p class="visit-confirm-summary" id="visitConfirmSummary"></p>
+                    <div class="visit-confirm-actions">
+                        <button type="button" class="btn btn-outline" data-visit-keep>Giữ lịch</button>
+                        <button type="button" class="btn btn-coral" data-visit-confirm-yes>Hủy lịch</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div id="toast" role="status" aria-live="polite"></div>
 
     <script src="js/data/properties.js"></script>
@@ -615,6 +670,7 @@
     <script src="js/compare.js"></script>
     <script src="js/detail.js"></script>
     <script src="js/inquiry.js"></script>
+    <script src="js/visit-schedule.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>

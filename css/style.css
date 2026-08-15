@@ -100,7 +100,7 @@ button {
 
 .header-inner {
     display: grid;
-    grid-template-columns: 1fr auto 1fr;
+    grid-template-columns: auto minmax(0, 1fr) auto;
     align-items: center;
     height: 76px;
 }
@@ -113,16 +113,24 @@ button {
     letter-spacing: -0.01em;
     justify-self: start;
     line-height: 1;
+    white-space: nowrap;
 }
 
 .logo span {
     color: var(--accent);
 }
 
+.nav {
+    justify-self: center;
+    min-width: 0;
+    white-space: nowrap;
+}
+
 .nav-list {
     display: flex;
     list-style: none;
     gap: 6px;
+    white-space: nowrap;
 }
 
 .nav-link {
@@ -134,6 +142,7 @@ button {
     color: var(--text);
     padding: 9px 13px;
     border-radius: 999px;
+    white-space: nowrap;
     transition: color 0.2s, background 0.2s;
 }
 
@@ -162,13 +171,17 @@ button {
 .header-actions {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 8px;
     justify-self: end;
+    flex: none;
+    min-width: 0;
+    white-space: nowrap;
 }
 
 .btn-cta {
-    padding: 0 22px;
+    padding: 0 18px;
     min-height: 44px;
+    white-space: nowrap;
 }
 
 .cta-short {
@@ -2600,8 +2613,205 @@ body.compare-bar-active {
 }
 
 body.inquiry-open,
-body.compare-open {
+body.compare-open,
+body.visit-open {
     overflow: hidden;
+}
+
+/* ========== Visit schedule (lịch xem nhà) ========== */
+.visit-count {
+    background: var(--teal) !important;
+}
+
+.visit-toggle:hover {
+    color: var(--teal);
+    background: var(--teal-soft);
+    border-color: rgba(47, 116, 109, 0.4);
+}
+
+.visit-card {
+    width: min(460px, 100%);
+}
+
+.visit-property {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    background: var(--mist);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+    margin-bottom: 16px;
+}
+
+.visit-property-name {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.05rem;
+    color: var(--ink);
+}
+
+.visit-property-price {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--teal);
+}
+
+.visit-slots {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-bottom: 18px;
+}
+
+.visit-slot {
+    min-height: 44px;
+    border: 1.5px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: #FFFFFF;
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s, color 0.2s;
+}
+
+.visit-slot:hover {
+    border-color: rgba(47, 116, 109, 0.5);
+}
+
+.visit-slot[aria-pressed="true"] {
+    background: var(--teal);
+    border-color: var(--teal);
+    color: #FFFFFF;
+}
+
+.visit-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.visit-actions .btn {
+    flex: 1;
+    min-height: 44px;
+}
+
+.visit-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    padding: 14px;
+    margin-bottom: 10px;
+}
+
+.visit-item-main {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+.visit-item-name {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--ink);
+}
+
+.visit-item-price {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--teal);
+}
+
+.visit-item-when {
+    font-size: 0.85rem;
+    color: var(--muted);
+}
+
+.visit-cancel {
+    flex: none;
+}
+
+.visit-empty {
+    text-align: center;
+    padding: 18px 8px 8px;
+}
+
+.visit-empty h3 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--ink);
+    margin-bottom: 6px;
+}
+
+.visit-empty p {
+    font-size: 0.9rem;
+    color: var(--muted);
+    margin-bottom: 16px;
+}
+
+.visit-local-note {
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--muted);
+    margin: -4px 0 16px;
+}
+
+.visit-confirm {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(247, 247, 245, 0.92);
+}
+
+.visit-confirm-scrim {
+    position: absolute;
+    inset: 0;
+}
+
+.visit-confirm-card {
+    position: relative;
+    width: min(360px, 100%);
+    background: #FFFFFF;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-lg);
+    padding: 24px;
+    text-align: center;
+}
+
+.visit-confirm-card h3 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: var(--ink);
+    margin-bottom: 8px;
+}
+
+.visit-confirm-summary {
+    font-size: 0.9rem;
+    color: var(--text);
+    margin-bottom: 18px;
+}
+
+.visit-confirm-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.visit-confirm-actions .btn {
+    flex: 1;
+    min-height: 44px;
 }
 
 /* ========== Animations ========== */
@@ -2712,6 +2922,38 @@ body.compare-open {
     }
 }
 
+/* ========== Responsive: header two-row (before nav/actions collide) ========== */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .header-inner {
+        grid-template-columns: 1fr auto;
+        grid-template-rows: auto auto;
+        grid-template-areas:
+            "logo actions"
+            "nav nav";
+        height: auto;
+        gap: 6px 12px;
+        padding: 10px 0;
+    }
+
+    .logo {
+        grid-area: logo;
+    }
+
+    .header-actions {
+        grid-area: actions;
+    }
+
+    .nav {
+        grid-area: nav;
+        justify-self: center;
+        width: 100%;
+    }
+
+    .nav-list {
+        justify-content: center;
+    }
+}
+
 /* ========== Responsive: mobile ========== */
 @media (max-width: 767px) {
     .header-inner {
@@ -2791,6 +3033,28 @@ body.compare-open {
         padding: 0 4px;
         font-size: 0.66rem;
         border: 2px solid #FFFFFF;
+    }
+
+    .visit-slots {
+        grid-template-columns: 1fr;
+    }
+
+    .visit-actions {
+        flex-direction: column;
+    }
+
+    .visit-item {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+
+    .visit-cancel {
+        width: 100%;
+    }
+
+    .visit-card {
+        padding: 20px;
     }
 
     .hero {
@@ -3142,6 +3406,20 @@ body.compare-open {
     }
 }
 
+/* ========== Responsive: mobile (reset two-row header grid) ========== */
+@media (max-width: 767px) {
+    .header-inner {
+        grid-template-areas: none;
+        grid-template-rows: none;
+        gap: normal;
+        padding: 0;
+    }
+
+    .nav-list {
+        justify-content: flex-start;
+    }
+}
+
 /* ========== Responsive: small mobile ========== */
 @media (max-width: 480px) {
     .list-grid {
@@ -3173,6 +3451,18 @@ body.compare-open {
 
     .concierge-options {
         grid-template-columns: 1fr;
+    }
+
+    .logo {
+        font-size: 1.3rem;
+    }
+
+    .btn-cta {
+        padding: 0 14px;
+    }
+
+    .visit-confirm-actions {
+        flex-direction: column;
     }
 }
 

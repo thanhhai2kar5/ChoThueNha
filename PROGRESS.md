@@ -17,9 +17,9 @@
 ## Kiến trúc hiện tại (ĐANG CHẠY)
 
 Thứ tự script (`index.html` cuối body):
-`properties.js → ui.js → listings.js → favorites.js → filters.js → concierge.js → compare.js → detail.js → inquiry.js → main.js`
+`properties.js → ui.js → listings.js → favorites.js → filters.js → concierge.js → compare.js → detail.js → inquiry.js → visit-schedule.js → main.js`
 
-Chuỗi phụ thuộc: `properties → ui → listings → favorites → filters → concierge → compare → detail → inquiry → main`.
+Chuỗi phụ thuộc: `properties → ui → listings → favorites → filters → concierge → compare → detail → inquiry → visit-schedule → main`.
 `window.UI`, `window.Listings`, `window.Favorites`, `window.Filters`, `window.Concierge`,
 `window.Compare`, `window.Detail`, `window.Inquiry` gán tại parse-time (cuối IIFE).
 `window.Detail` gồm `openProperty(id)`, `closeDetail()`, `syncRoute()`.
@@ -281,6 +281,34 @@ Chuỗi phụ thuộc: `properties → ui → listings → favorites → filters
 - Responsive: bọc .compare-table-scroll (overflow-x auto, label cột sticky left), không tràn viewport;
   panel có bottom padding trên mobile.
 
+### 11. Feature: Lịch xem nhà (Visit Schedule) — demo, chỉ lưu trên thiết bị (ĐANG LÀM, chờ review — CHƯA COMMIT)
+- Module mới `js/visit-schedule.js` (IIFE, nạp SAU `js/inquiry.js`, TRƯỚC `js/main.js`); phụ thuộc
+  `window.UI` + `window.Listings`. API: `window.VisitSchedule = { open, close, openList, getAll, cancel }`.
+- localStorage `chothuenha:visit-schedules` (record `{ id, propertyId, propertyName, propertyPrice, date,
+  time, createdAt }` — KHÔNG lưu tên/SĐT/ghi chú; parse lỗi → `[]` an toàn).
+- Booking modal mở từ nút "Đặt lịch xem" `#dtVisit` trong detail (bên cạnh `#dtInterest`/`#dtShare`);
+  pre-fill tên + giá thật (read-only); ngày ≥ hôm nay; 4 khung giờ (`09:00–10:00`, `10:30–11:30`,
+  `14:00–15:00`, `16:00–17:00`) với `data-visit-time` + `aria-pressed`.
+- Validation: thiếu/ngày quá khứ/không hợp lệ/trùng `propertyId+date+time` → `UI.toast`; demo note
+  "Demo: lịch chỉ được lưu trên thiết bị này, không gửi yêu cầu thực tế." ở cả 2 modal.
+- List modal từ nút header "Lịch xem" `#visitToggle` (badge `#visitCount` teal, style như `#favToggle`);
+  item: tên căn + giá thật + ngày tiếng Việt + khung giờ + "Hủy lịch" (confirm browser, chỉ hủy đúng id,
+  count cập nhật ngay); empty state + nút "Khám phá danh sách" (đóng modal, cuộn tới `#danh-sach`).
+  Sắp xếp tăng dần theo ngày rồi giờ.
+- A11y: reuse `.inquiry`/`.inquiry-card` (role=dialog, aria-modal, tabindex=-1); backdrop/X/Escape đóng;
+  focus về opener; `body.visit-open` overflow hidden; controls ≥44px; 390px ổn (slots 1 cột, actions dọc).
+- Không gửi dữ liệu thật, không backend/API/calendar sync; Inquiry và Favorites không đổi.
+- **Patch polish**: bỏ window.confirm → confirm layer nội bộ `.visit-confirm` (contained trong card list,
+  scrim nhẹ, "Hủy lịch xem?" + tóm tắt + "Giữ lịch"/"Hủy lịch"; backdrop/X/Escape/Giữ lịch = dismiss
+  an toàn, focus về nút Hủy cũ; sau khi xóa focus về list/empty action); demo note đậm → dòng muted
+  `.visit-local-note`; nút lưu bỏ "(demo)"; header CTA `white-space: nowrap` + gap 8px + padding giảm
+  (desktop 1 dòng), 480px: logo nhỏ lại, CTA padding 14px, confirm-actions xếp dọc.
+- **Patch header**: desktop grid `auto minmax(0,1fr) auto` (logo | nav giữa co được | actions end không co),
+  nav + links + actions `white-space: nowrap`, actions `flex:none`; breakpoint 768–1024 → header 2 hàng
+  (logo/actions hàng 1, nav hàng 2 centered) trước khi va chạm; reset grid areas ở ≤767 (mobile menu giữ
+  nguyên). Không đổi ID/href/data-attr/count/nav destination/mobile menu.
+- Trạng thái: **in progress, awaiting review** — chưa commit. (Cập nhật sau review Live Server desktop + 390px.)
+
 ## Còn lại — Ưu tiên 2: Vòng "quality polish" (từng được yêu cầu, chưa làm)
 Breadcrumb có "Khám phá"; back button giữ nguyên bộ lọc; thẻ quick-facts;
 nút trái tim toggle + toast (đã có toggle, còn toast copy);
@@ -298,7 +326,8 @@ results count theo ngữ cảnh lọc (đã theo list dài, còn empty state). �
 1. Syntax (PowerShell không mở rộng glob — chạy từng file): `node --check js\data\properties.js`,
    `node --check js\ui.js`, `node --check js\listings.js`, `node --check js\favorites.js`,
    `node --check js\filters.js`, `node --check js\concierge.js`, `node --check js\compare.js`,
-   `node --check js\detail.js`, `node --check js\inquiry.js`, `node --check js\main.js`;
+   `node --check js\detail.js`, `node --check js\inquiry.js`, `node --check js\visit-schedule.js`,
+   `node --check js\main.js`;
    sau đó `git diff --check`.
 2. `node C:\SQL_SE~1\opencode\verify_listings.js`
 3. `node C:\SQL_SE~1\opencode\verify_integration.js` (cập nhật nếu thêm module/ID mới)
