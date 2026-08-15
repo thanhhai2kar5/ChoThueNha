@@ -145,6 +145,7 @@
         save();
         renderCount();
         close();
+        UI.dispatch("visit:changed");
         UI.toast("Đã lưu lịch xem " + p.name + ".");
     }
 
@@ -191,6 +192,7 @@
         save();
         renderCount();
         renderList();
+        UI.dispatch("visit:changed");
         if (confirmLayer) confirmLayer.hidden = true;
         UI.toast("Đã hủy lịch xem " + rec.propertyName + ".");
         var explore = visitContent && visitContent.querySelector ? visitContent.querySelector("[data-visit-explore]") : null;

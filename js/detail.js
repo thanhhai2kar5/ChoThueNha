@@ -67,16 +67,49 @@
         var dtLocText = document.getElementById("dtLocText");
         var dtPrice = document.getElementById("dtPrice");
         var dtMeta = document.getElementById("dtMeta");
+        var dtFacts = document.getElementById("dtFacts");
         var dtRent = document.getElementById("dtRent");
         var dtDesc = document.getElementById("dtDesc");
         var dtFeatures = document.getElementById("dtFeatures");
         var dtNearby = document.getElementById("dtNearby");
         var dtSimilar = document.getElementById("dtSimilar");
+        var dtSavedState = document.getElementById("dtSavedState");
+        var dtVisitState = document.getElementById("dtVisitState");
+        var dtSave = document.getElementById("dtSave");
+        var dtSaveLabel = document.getElementById("dtSaveLabel");
+        var dtVisit = document.getElementById("dtVisit");
 
         function getSimilar(p) {
             var same = properties.filter(function (x) { return x.id !== p.id && x.type === p.type; });
             var others = properties.filter(function (x) { return x.id !== p.id && x.type !== p.type; });
             return same.concat(others).slice(0, 3);
+        }
+
+        function hasSchedule(id) {
+            var vs = window.VisitSchedule;
+            if (!vs || typeof vs.getAll !== "function") return false;
+            return vs.getAll().some(function (r) { return r.propertyId === id; });
+        }
+
+        function updateMyState() {
+            if (!currentId) return;
+            var saved = !!(window.Favorites && window.Favorites.isFavorite(currentId));
+            var scheduled = hasSchedule(currentId);
+            if (dtSavedState) {
+                dtSavedState.textContent = saved ? "Đã lưu căn này" : "Chưa lưu";
+                dtSavedState.classList.toggle("is-active", saved);
+            }
+            if (dtVisitState) {
+                dtVisitState.textContent = scheduled ? "Đã có lịch xem" : "Chưa đặt lịch";
+                dtVisitState.classList.toggle("is-active", scheduled);
+            }
+            if (dtSave) {
+                dtSave.setAttribute("aria-pressed", saved ? "true" : "false");
+                if (dtSaveLabel) dtSaveLabel.textContent = saved ? "Đã lưu" : "Lưu căn này";
+            }
+            if (dtVisit) {
+                dtVisit.textContent = scheduled ? "Xem lịch đã lưu" : "Đặt lịch xem";
+            }
         }
 
         function renderDetail(p) {
@@ -118,9 +151,16 @@
                 '<li>' + L.BATH_SVG + ' ' + p.bathrooms + ' phòng tắm</li>';
 
             dtRent.innerHTML =
-                '<li><span>Hợp đồng</span><strong>' + p.contract + '</strong></li>' +
-                '<li><span>Nội thất</span><strong>' + p.furnished + '</strong></li>' +
-                '<li><span>Nhận nhà</span><strong>' + p.availableDate + '</strong></li>';
+                '<li><span>Hợp đồng</span><strong>' + UI.esc(p.contract) + '</strong></li>' +
+                '<li><span>Nội thất</span><strong>' + UI.esc(p.furnished) + '</strong></li>' +
+                '<li><span>Nhận nhà</span><strong>' + UI.esc(p.availableDate) + '</strong></li>';
+
+            dtFacts.innerHTML =
+                '<div class="detail-fact"><dt>Trạng thái</dt><dd>' + UI.esc(p.status) + '</dd></div>' +
+                '<div class="detail-fact"><dt>Vị trí</dt><dd>' + UI.esc(p.location) + '</dd></div>' +
+                '<div class="detail-fact"><dt>Nhận nhà</dt><dd>' + UI.esc(p.availableDate) + '</dd></div>' +
+                '<div class="detail-fact"><dt>Hợp đồng</dt><dd>' + UI.esc(p.contract) + '</dd></div>' +
+                '<div class="detail-fact"><dt>Nội thất</dt><dd>' + UI.esc(p.furnished) + '</dd></div>';
 
             dtDesc.innerHTML = p.description.split("\n\n").map(function (para) {
                 return "<p>" + para + "</p>";
@@ -137,6 +177,7 @@
 
             dtSimilar.innerHTML = getSimilar(p).map(L.cardHTML).join("");
 
+            updateMyState();
             UI.dispatch("list:rendered");
         }
 
@@ -204,6 +245,25 @@
         window.addEventListener("hashchange", syncRoute);
         syncRoute();
 
+        document.getElementById("dtVisit").addEventListener("click", function () {
+            if (!window.VisitSchedule) {
+                UI.toast("Tính năng lịch xem đang được hoàn thiện.");
+                return;
+            }
+            if (hasSchedule(currentId)) {
+                window.VisitSchedule.openList();
+            } else {
+                window.VisitSchedule.open(currentId);
+            }
+        });
+        document.getElementById("dtSave").addEventListener("click", function () {
+            if (!window.Favorites) {
+                UI.toast("Tính năng lưu đang được hoàn thiện.");
+                return;
+            }
+            window.Favorites.toggle(currentId);
+            updateMyState();
+        });
         document.getElementById("dtInterest").addEventListener("click", function () {
             if (window.Inquiry) {
                 window.Inquiry.open(currentId);
@@ -211,16 +271,34 @@
                 UI.toast("Tính năng liên hệ đang được hoàn thiện.");
             }
         });
-        document.getElementById("dtVisit").addEventListener("click", function () {
-            if (window.VisitSchedule) {
-                window.VisitSchedule.open(currentId);
-            } else {
-                UI.toast("Tính năng lịch xem đang được hoàn thiện.");
+        document.getElementById("dtShare").addEventListener("click", function () {
+            var url = location.href.split("#")[0] + "#property=" + encodeURIComponent(currentId);
+            var done = function () { UI.toast("Đã sao chép liên kết của căn này."); };
+            var fail = function () { UI.toast("Chưa sao chép được tự động — liên kết nằm ở thanh địa chỉ trình duyệt."); };
+            if (typeof navigator !== "undefined" && navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(url).then(done, fail);
+                return;
+            }
+            try {
+                var ta = document.createElement("textarea");
+                ta.value = url;
+                ta.setAttribute("readonly", "");
+                document.body.appendChild(ta);
+                ta.select();
+                var ok = document.execCommand ? document.execCommand("copy") : false;
+                document.body.removeChild(ta);
+                if (ok) {
+                    done();
+                } else {
+                    fail();
+                }
+            } catch (e) {
+                fail();
             }
         });
-        document.getElementById("dtShare").addEventListener("click", function () {
-            UI.toast("Tính năng liên hệ đang được hoàn thiện.");
-        });
+
+        document.addEventListener("favorites:changed", updateMyState);
+        document.addEventListener("visit:changed", updateMyState);
 
         /* =====================================================
            API public cho js/main.js (delegation + routing)

@@ -506,15 +506,34 @@
 
                     <ul class="detail-meta" id="dtMeta"></ul>
 
+                    <div class="detail-facts-block">
+                        <h4>Tóm tắt nhanh</h4>
+                        <dl class="detail-facts" id="dtFacts"></dl>
+                    </div>
+
                     <div class="rent-box">
                         <h4>Thông tin thuê</h4>
                         <ul id="dtRent"></ul>
                     </div>
 
+                    <div class="detail-my-state" id="dtMyState" aria-live="polite">
+                        <span class="my-state-chip" id="dtSavedState">Chưa lưu</span>
+                        <span class="my-state-chip" id="dtVisitState">Chưa đặt lịch</span>
+                    </div>
+
                     <div class="detail-ctas">
-                        <button class="btn btn-coral" id="dtInterest">Quan tâm căn này</button>
-                        <button class="btn btn-outline" id="dtVisit">Đặt lịch xem</button>
-                        <button class="btn btn-outline" id="dtShare">Chia sẻ</button>
+                        <button class="btn btn-coral" id="dtVisit">Đặt lịch xem</button>
+                        <div class="detail-ctas-pair">
+                            <button class="btn btn-outline detail-save" id="dtSave" aria-pressed="false">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 14c1.5-1.5 2-3.5 2-5.5A5.5 5.5 0 0 0 15.5 3 5.5 5.5 0 0 0 12 4.7 5.5 5.5 0 0 0 8.5 3 5.5 5.5 0 0 0 3 8.5c0 2 .5 4 2 5.5l7 7z"></path></svg>
+                                <span id="dtSaveLabel">Lưu căn này</span>
+                            </button>
+                            <button class="btn btn-outline" id="dtInterest">Quan tâm căn này</button>
+                        </div>
+                        <button class="detail-share" id="dtShare" aria-label="Chia sẻ liên kết căn này">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+                            <span>Chia sẻ</span>
+                        </button>
                     </div>
                 </aside>
             </div>
@@ -533,6 +552,17 @@
                 <div class="detail-block">
                     <h3>Khu vực xung quanh</h3>
                     <ul class="nearby-list" id="dtNearby"></ul>
+                </div>
+
+                <div class="detail-block">
+                    <h3>Checklist khi đi xem nhà</h3>
+                    <p class="checklist-note">Danh sách gợi ý dành cho bạn khi đi xem — không phải cam kết của chủ nhà.</p>
+                    <ul class="checklist-list">
+                        <li>Kiểm tra ánh sáng và thông gió</li>
+                        <li>Thử nước và các thiết bị</li>
+                        <li>Quan sát tiếng ồn xung quanh</li>
+                        <li>Hỏi rõ chỗ để xe và điều khoản hợp đồng</li>
+                    </ul>
                 </div>
 
                 <div class="detail-block">

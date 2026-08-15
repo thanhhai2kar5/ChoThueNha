@@ -307,6 +307,21 @@ Chuỗi phụ thuộc: `properties → ui → listings → favorites → filters
   nav + links + actions `white-space: nowrap`, actions `flex:none`; breakpoint 768–1024 → header 2 hàng
   (logo/actions hàng 1, nav hàng 2 centered) trước khi va chạm; reset grid areas ở ≤767 (mobile menu giữ
   nguyên). Không đổi ID/href/data-attr/count/nav destination/mobile menu.
+
+### 12. Feature: Detail information upgrade (ĐANG LÀM, chờ review — CHƯA COMMIT)
+- "Tóm tắt nhanh" `#dtFacts` (grid 2 cột, muted): Trạng thái, Vị trí, Nhận nhà, Hợp đồng, Nội thất —
+  chỉ từ dữ liệu thật; KHÔNG lặp area/bed/bath đang có ở `#dtMeta`.
+- "Trạng thái của bạn với căn này" `#dtMyState` (chips nhỏ yên tĩnh): saved/unsaved + scheduled/not —
+  đọc `Favorites.isFavorite` + `VisitSchedule.getAll`; chip active = teal nhạt.
+- CTA: `#dtVisit` primary ("Đặt lịch xem" / "Xem lịch đã lưu" khi có schedule, mở list); `#dtSave` toggle
+  (heart icon, aria-pressed, label "Lưu căn này"/"Đã lưu"); `#dtInterest` giữ nguyên; `#dtShare` tertiary
+  (copy URL detail qua clipboard + fallback execCommand/textarea, toast trung thực, không tuyên bố gửi/server).
+- "Checklist khi đi xem nhà" tĩnh (ánh sáng/thông gió; thử nước/thiết bị; tiếng ồn; chỗ để xe & hợp đồng)
+  kèm chú thích "không phải cam kết của chủ nhà", sau nearby trước similar.
+- Đồng bộ state: `favorites:changed` (Favorites sẵn có) + `visit:changed` (mới thêm trong
+  visit-schedule.js sau save/cancel) → updateMyState nếu detail đang mở; không poll localStorage,
+  không re-render gallery/scroll.
+- Giữ nguyên: gallery, breadcrumb, routing/hash, compare, inquiry, visit, dữ liệu properties.
 - Trạng thái: **in progress, awaiting review** — chưa commit. (Cập nhật sau review Live Server desktop + 390px.)
 
 ## Còn lại — Ưu tiên 2: Vòng "quality polish" (từng được yêu cầu, chưa làm)
