@@ -41,6 +41,7 @@
         }
         renderBar();
         renderToggles();
+        UI.dispatch("compare:changed");
     }
 
     function clearAll() {
@@ -48,6 +49,7 @@
         renderBar();
         renderToggles();
         close();
+        UI.dispatch("compare:changed");
     }
 
     function renderToggles() {

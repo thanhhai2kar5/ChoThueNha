@@ -2064,6 +2064,23 @@ button {
     outline-offset: 2px;
 }
 
+.detail-ctas-tertiary {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 2px;
+}
+
+.detail-share[aria-pressed="true"] {
+    color: var(--accent);
+    border-color: rgba(201, 86, 75, 0.4);
+    background: var(--accent-soft);
+}
+
+.detail-share[aria-pressed="true"] svg {
+    color: var(--accent);
+}
+
 .detail-facts-block {
     margin-bottom: 18px;
 }
@@ -3102,6 +3119,172 @@ body.visit-open {
 .visit-confirm-actions .btn {
     flex: 1;
     min-height: 44px;
+}
+
+/* ========== Viewing Questions (câu hỏi trước khi xem nhà) ========== */
+.questions-card {
+    width: min(560px, 100%);
+}
+
+.vq-property {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.05rem;
+    color: var(--ink);
+    margin-bottom: 4px;
+}
+
+.vq-local-note {
+    font-size: 0.82rem;
+    color: var(--muted);
+    margin-bottom: 16px;
+}
+
+.vq-suggest {
+    margin-bottom: 16px;
+}
+
+.vq-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text);
+    margin: 0 0 8px;
+}
+
+.vq-suggest-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+}
+
+.vq-suggestion {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    text-align: left;
+    min-height: 44px;
+    padding: 8px 10px;
+    background: var(--mist);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 0.84rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s, color 0.2s;
+}
+
+.vq-suggestion:hover {
+    border-color: rgba(201, 86, 75, 0.4);
+    background: var(--accent-soft);
+    color: var(--ink);
+}
+
+.vq-suggestion:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
+}
+
+.vq-add {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 18px;
+}
+
+.vq-add input {
+    flex: 1;
+    min-width: 0;
+    height: 44px;
+    padding: 0 12px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    color: var(--ink);
+    background: #FFFFFF;
+}
+
+.vq-add input:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
+}
+
+.vq-add .vq-add-btn {
+    height: 44px;
+    flex: none;
+    padding: 0 16px;
+}
+
+.vq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.vq-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    background: var(--mist);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    padding: 10px 12px;
+}
+
+.vq-row-text {
+    font-size: 0.9rem;
+    color: var(--text);
+    line-height: 1.4;
+}
+
+.vq-remove {
+    flex: none;
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--muted);
+    font-size: 1.05rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+
+.vq-remove:hover {
+    background: var(--accent-soft);
+    color: var(--accent);
+}
+
+.vq-remove:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
+}
+
+.vq-empty {
+    text-align: center;
+    padding: 14px 10px;
+    background: var(--mist);
+    border: 1px dashed var(--line);
+    border-radius: var(--radius-sm);
+}
+
+.vq-empty p {
+    font-size: 0.86rem;
+    color: var(--muted);
+    margin: 0;
+}
+
+@media (max-width: 767px) {
+    .vq-suggest-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .vq-add {
+        flex-direction: column;
+    }
 }
 
 /* ========== Animations ========== */

@@ -348,6 +348,29 @@ Chuỗi phụ thuộc: `properties → ui → listings → favorites → filters
   1 cột ≤767px (tap ≥44px, không overflow ngang). Giữ nguyên: filters, saved, compare, detail,
   visit schedule, Home Finder, routing, header.
 
+### 14. Feature: Decision support upgrade (Compare Choice Center + Viewing Questions) (in progress, awaiting review — CHƯA COMMIT)
+- **Compare Choice Center** (điểm so sánh tại detail): nút tertiary `#dtCompare` gần save/interest/share —
+  chưa chọn: "Thêm vào so sánh"; đã chọn: "Đang so sánh · Xem X/3" (bấm → `Compare.open()`, toast min-2 sẵn có
+  vẫn giữ). CHỈ dùng `Compare.toggle/isSelected/count/open` — không có selected state thứ hai, không đổi thứ tự/
+  bảng/diff-only/a11y. Đủ 3 mà thêm căn chưa chọn → toast max-3 sẵn có, không đổi state. Absent `window.Compare`
+  → toast no-op an toàn.
+- `compare.js`: dispatch `compare:changed` sau mỗi add/remove (toggle) + clearAll; case max-3 KHÔNG dispatch
+  (vì không đổi state). Detail lắng nghe `compare:changed` → chỉ cập nhật label/chip, không re-render gallery/scroll.
+- Chip trạng thái real: `#dtCompareState` "Chưa so sánh"/"Đang so sánh" (chip calm, không score/recommendation).
+- **Viewing Questions**: module mới `js/viewing-questions.js` (nạp SAU visit-schedule, TRƯỚC main). CHỈ phụ thuộc
+  `window.UI` + `window.Listings`. localStorage `chothuenha:viewing-questions` = array `{id, propertyId, text, createdAt}`;
+  malformed → [] an toàn; trim; reject empty + duplicate (không phân biệt hoa/thường) cùng property; render luôn qua `UI.esc`.
+  Phơi `window.ViewingQuestions = { open, close, getForProperty, countForProperty, add, remove }`.
+- Detail: nút tertiary `#dtQuestions` "Chuẩn bị câu hỏi" + chip `#dtQuestionsState` "Chưa có câu hỏi"/"X câu hỏi đã lưu".
+  Dialog `#questionsModal` dùng lại convention `.inquiry` + `[hidden]` + `body.visit-open` (block scroll):
+  title "Câu hỏi trước khi xem nhà", tên căn real, note local-only muted, 4 gợi ý tĩnh dạng button (thêm thẳng /
+  duplicate → toast), input + "Thêm câu hỏi" (Enter cũng thêm), rows saved có remove aria-label cụ thể,
+  empty state hữu ích. Đóng bằng backdrop/X/Escape + focus restore opener; không confirm trình duyệt.
+  Dispatch `viewing-questions:changed` sau add/remove; Detail chỉ cập nhật chip.
+- Tertiary group `.detail-ctas-tertiary`: flex-wrap, 3 nút compact (compare, questions, share) cùng kiểu `.detail-share`
+  ≥44px; compare active `[aria-pressed=true]` accent nhẹ. Chips 4 mục (saved/visit/questions/compare) đều `.my-state-chip` calm.
+  Dialog CSS `.questions-card/.vq-*` (chỉ thêm), grid 2 cột → 1 cột ≤767px. Giữ nguyên: map aside, CTA order, compare bar/panel, schedule.
+
 ## Còn lại — Ưu tiên 2: Vòng "quality polish" (từng được yêu cầu, chưa làm)
 Breadcrumb có "Khám phá"; back button giữ nguyên bộ lọc; thẻ quick-facts;
 nút trái tim toggle + toast (đã có toggle, còn toast copy);

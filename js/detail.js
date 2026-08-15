@@ -79,9 +79,14 @@
         var dtSimilar = document.getElementById("dtSimilar");
         var dtSavedState = document.getElementById("dtSavedState");
         var dtVisitState = document.getElementById("dtVisitState");
+        var dtQuestionsState = document.getElementById("dtQuestionsState");
+        var dtCompareState = document.getElementById("dtCompareState");
         var dtSave = document.getElementById("dtSave");
         var dtSaveLabel = document.getElementById("dtSaveLabel");
         var dtVisit = document.getElementById("dtVisit");
+        var dtCompare = document.getElementById("dtCompare");
+        var dtCompareLabel = document.getElementById("dtCompareLabel");
+        var dtQuestions = document.getElementById("dtQuestions");
 
         function getSimilar(p) {
             var same = properties.filter(function (x) { return x.id !== p.id && x.type === p.type; });
@@ -113,6 +118,22 @@
             }
             if (dtVisit) {
                 dtVisit.textContent = scheduled ? "Xem lịch đã lưu" : "Đặt lịch xem";
+            }
+            var qCount = (window.ViewingQuestions && typeof window.ViewingQuestions.countForProperty === "function")
+                ? window.ViewingQuestions.countForProperty(currentId) : 0;
+            if (dtQuestionsState) {
+                dtQuestionsState.textContent = qCount > 0 ? qCount + " câu hỏi đã lưu" : "Chưa có câu hỏi";
+                dtQuestionsState.classList.toggle("is-active", qCount > 0);
+            }
+            var inCompare = !!(window.Compare && window.Compare.isSelected(currentId));
+            if (dtCompareState) {
+                dtCompareState.textContent = inCompare ? "Đang so sánh" : "Chưa so sánh";
+                dtCompareState.classList.toggle("is-active", inCompare);
+            }
+            if (dtCompare && dtCompareLabel) {
+                var cmpCount = window.Compare && window.Compare.count ? window.Compare.count() : 0;
+                dtCompareLabel.textContent = inCompare ? "Đang so sánh · Xem " + cmpCount + "/3" : "Thêm vào so sánh";
+                dtCompare.setAttribute("aria-pressed", inCompare ? "true" : "false");
             }
         }
 
@@ -315,9 +336,30 @@
                 fail();
             }
         });
+        document.getElementById("dtCompare").addEventListener("click", function () {
+            if (!window.Compare) {
+                UI.toast("Tính năng so sánh đang được hoàn thiện.");
+                return;
+            }
+            if (window.Compare.isSelected(currentId)) {
+                window.Compare.open();
+            } else {
+                window.Compare.toggle(currentId);
+                updateMyState();
+            }
+        });
+        document.getElementById("dtQuestions").addEventListener("click", function () {
+            if (!window.ViewingQuestions) {
+                UI.toast("Tính năng câu hỏi đang được hoàn thiện.");
+                return;
+            }
+            window.ViewingQuestions.open(currentId);
+        });
 
         document.addEventListener("favorites:changed", updateMyState);
         document.addEventListener("visit:changed", updateMyState);
+        document.addEventListener("compare:changed", updateMyState);
+        document.addEventListener("viewing-questions:changed", updateMyState);
 
         /* =====================================================
            API public cho js/main.js (delegation + routing)

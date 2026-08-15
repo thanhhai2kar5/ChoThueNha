@@ -533,6 +533,8 @@
                     <div class="detail-my-state" id="dtMyState" aria-live="polite">
                         <span class="my-state-chip" id="dtSavedState">Chưa lưu</span>
                         <span class="my-state-chip" id="dtVisitState">Chưa đặt lịch</span>
+                        <span class="my-state-chip" id="dtQuestionsState">Chưa có câu hỏi</span>
+                        <span class="my-state-chip" id="dtCompareState">Chưa so sánh</span>
                     </div>
 
                     <div class="detail-ctas">
@@ -544,6 +546,17 @@
                             </button>
                             <button class="btn btn-outline" id="dtInterest">Quan tâm căn này</button>
                         </div>
+                    </div>
+
+                    <div class="detail-ctas-tertiary">
+                        <button class="detail-share" id="dtCompare" type="button" aria-pressed="false">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v18"></path><path d="M8 21h8"></path><path d="M12 5L5 10v.5a3 3 0 0 0 6 0V10z"></path><path d="M12 5l7 5v.5a3 3 0 0 1-6 0V10z"></path></svg>
+                            <span id="dtCompareLabel">Thêm vào so sánh</span>
+                        </button>
+                        <button class="detail-share" id="dtQuestions" type="button">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                            <span>Chuẩn bị câu hỏi</span>
+                        </button>
                         <button class="detail-share" id="dtShare" aria-label="Chia sẻ liên kết căn này">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
                             <span>Chia sẻ</span>
@@ -715,6 +728,25 @@
         </div>
     </div>
 
+    <div class="inquiry" id="questionsModal" hidden>
+        <div class="inquiry-backdrop" data-vq-close></div>
+        <div class="inquiry-card questions-card" role="dialog" aria-modal="true" aria-labelledby="questionsTitle" tabindex="-1">
+            <button class="inquiry-close" data-vq-close aria-label="Đóng">&#10005;</button>
+            <h2 id="questionsTitle">Câu hỏi trước khi xem nhà</h2>
+            <p class="vq-property" id="qPropertyName"></p>
+            <p class="vq-local-note">Ghi chú này chỉ được lưu trên thiết bị của bạn.</p>
+            <div class="vq-suggest">
+                <p class="vq-label">Gợi ý nhanh</p>
+                <div class="vq-suggest-grid" id="qSuggestions"></div>
+            </div>
+            <div class="vq-add">
+                <input type="text" id="qInput" placeholder="Viết câu hỏi của bạn..." aria-label="Câu hỏi mới" maxlength="200">
+                <button type="button" class="btn btn-coral vq-add-btn" id="qAddBtn">Thêm câu hỏi</button>
+            </div>
+            <div class="vq-list" id="qList"></div>
+        </div>
+    </div>
+
     <div id="toast" role="status" aria-live="polite"></div>
 
     <script src="js/data/properties.js"></script>
@@ -728,6 +760,7 @@
     <script src="js/detail.js"></script>
     <script src="js/inquiry.js"></script>
     <script src="js/visit-schedule.js"></script>
+    <script src="js/viewing-questions.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>
