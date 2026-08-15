@@ -1,0 +1,90 @@
+# PROGRESS.md — Ghi nhớ tiến độ dự án ChoThuêNhà
+
+> File này ghi lại trạng thái hiện tại: đã xong gì, đang làm gì, cần làm tiếp theo.
+> Cập nhật sau mỗi phiên làm việc để session sau (người/AI) nắm được ngay.
+
+## Tổng quan trạng thái
+
+- **Giai đoạn**: Refactor module ĐÃ XONG + Gói nghiệp vụ frontend ĐÃ XONG (đã verify).
+  Còn lại: vòng "quality polish" (Ưu tiên 2) chưa làm.
+- **Trạng thái git**: chỉ có `Initial commit`; toàn bộ `index.html`, `css/`, `js/` đang UNTRACKED (chưa commit).
+- **Môi trường**: không internet, không browser → verify bằng `node --check` + smoke test vm.
+
+## Kiến trúc hiện tại (ĐANG CHẠY)
+
+Thứ tự script (`index.html` cuối body):
+`properties.js → ui.js → listings.js → favorites.js → filters.js → compare.js → detail.js → inquiry.js → main.js`
+
+Chuỗi phụ thuộc: `properties → ui → listings → favorites → filters → compare → detail → inquiry → main`.
+`window.UI`, `window.Listings`, `window.Favorites`, `window.Filters`, `window.Compare`,
+`window.Detail`, `window.Inquiry` gán tại parse-time (cuối IIFE).
+
+## Đã hoàn thành
+
+### 1. Refactor module (hành vi giữ nguyên 100%)
+1. **Dữ liệu** → `js/data/properties.js` (global `var properties`, 10 căn).
+2. **Listing** → `js/listings.js` (cardHTML, byId, statusBadgeClass, tabs, SPECIAL,
+   setFilter/applyFilter, renderList, getBaseList, getState; phơi `window.Listings`).
+3. **Detail** → `js/detail.js` (gallery, breadcrumb, similar, UI.toast, openProperty/closeDetail;
+   phơi `window.Detail`). `js/main.js` còn điều phối + UI chung (slideshow, header scroll,
+   menu mobile, delegation, keydown, init + hash routing).
+
+### 2. Gói nghiệp vụ frontend (đã code + verify)
+- `js/ui.js` — toast, esc (HTML escape), dispatch (CustomEvent). Phơi `window.UI`.
+- `js/favorites.js` — localStorage key `chothuenha:favorites`; toggle/isFavorite/count/getIds/
+  getList/renderHearts/renderCount; lắng nghe `list:rendered`. Phơi `window.Favorites`.
+- `js/filters.js` — search debounce 250ms, sort, URL query `?q=&filter=&sort=` (GIỮ hash),
+  active chips + "Xóa tất cả", saved view; lắng nghe `favorites:changed`. Phơi `window.Filters`.
+- `js/compare.js` — tối đa 3 căn + toast, compare-bar cố định dưới, panel bảng so sánh;
+  `[data-compare]` handler có `stopImmediatePropagation` để không mở detail nhầm. Phơi `window.Compare`.
+- `js/inquiry.js` — modal form quan tâm DEMO minh bạch (không gửi dữ liệu thật), prefill căn đang
+  xem, validate + success state. Phơi `window.Inquiry`.
+- `listings.js`: thêm nút `data-compare` vào card, `getBaseList/getState/setFilter/renderList(list?)`
+  + empty state (`[data-clear-filters]`) + dispatch `list:rendered`; tab handler → `Filters.setCategory`
+  (fallback `applyFilter`); bỏ duplicate `applyFilter` cũ.
+- `detail.js`: `showToast` → `UI.toast`; `dtInterest` → `Inquiry.open(currentId)`; `renderDetail`
+  dispatch `list:rendered` (đồng bộ heart/compare ở căn tương tự).
+- `main.js`: `.fav` → `Favorites.toggle(id)`; `[data-filter]` → `Filters.setFilter(kind)`.
+- `index.html`: fav-toggle + badge header; toolbar search/sort + active chips trong `#danh-sach`;
+  compare bar/panel; inquiry modal; nút compare-add ở 3 card tĩnh runway; 9 script tags.
+- `css/style.css`: CHỈ THÊM block mới (không sửa CSS cũ).
+
+### Đã verify (sau gói nghiệp vụ)
+- `node --check` sạch 9 file JS.
+- `verify_listings.js`: render 10, available→7, all→10, tab Villa→4, tab Sắp trống→3,
+  cardHTML có data-compare, getBaseList/getState/byId đúng.
+- `verify_integration.js` (vm nạp đủ 9 script, stub đủ ID mới + CustomEvent bus + localStorage +
+  URLSearchParams): initial 10; search "sông"→4 (chip 1); clearAll→10 (chip 0);
+  sort price_asc→first can-ho-ngoc-anh; empty state + `[data-clear-filters]`→10;
+  tab Căn hộ→6; filter available→7 + scroll; favorites count 2/favCount 2/saved view 2/unfav→1;
+  saved với 0 fav→toast "Chưa có căn nào được lưu."; compare max 3 + toast, panel table,
+  `[data-compare]` KHÔNG mở detail (stopImmediatePropagation), clearAll;
+  inquiry prefill/empty-toast/success/close; detail vẫn chạy + dtInterest mở inquiry;
+  syncUrl giữ hash `#property=`; reload: URL query init (available+price_asc+`q=sông`→3, first
+  can-ho-hoang-thanh, input/sort đúng), favorites persist localStorage, hash mở thẳng, back
+  trả về `pathname?search`.
+
+### Hành vi đang chạy (giữ nguyên)
+- Hero slideshow 5s + dots + prev/next + teaser; hamburger mobile; filter tab + chip quick-discovery
+  (Tất cả 10 / Căn hộ 6 / Villa 4 / Đang trống 7 / Sắp trống 3 / center 4 / light 4 / family 6);
+  hash detail + back; gallery 1+3 thumb; breadcrumb; 3 căn tương tự; toast; trái tim `.fav` giờ
+  toggle Favorites (fill coral khi active + badge #favCount).
+
+## Còn lại — Ưu tiên 2: Vòng "quality polish" (từng được yêu cầu, chưa làm)
+Breadcrumb có "Khám phá"; back button giữ nguyên bộ lọc; thẻ quick-facts; feature-grid 3/2/1 col;
+sticky summary chỉ ≥1024px; nút trái tim toggle + toast (đã có toggle, còn toast copy);
+toast copy "Tính năng đang được hoàn thiện trong phiên bản tiếp theo." (dùng cho dtShare);
+results count theo ngữ cảnh lọc (đã theo list dài, còn empty state). → Không gấp.
+
+## Caveats / quirk chưa xử lý (đã xác nhận, KHÔNG sửa tuỳ tiện)
+- Delegation anchor + nav-link gọi `D.closeDetail()` khi `!homeView.hidden` (home đang hiện) — hành vi
+  gốc có vẻ ngược logic nhưng chạy đúng thực tế.
+- Nút so sánh nằm TRONG card `[data-property]` phải `stopImmediatePropagation`, nếu không mở detail nhầm.
+- `dtShare` hiện chỉ toast.
+- `price` là chuỗi; sort giá phải parse `parseFloat(price.replace(/[^\d.,]/g,"").replace(",","."))`.
+
+## Cách verify khi làm tiếp
+1. `node --check js/*.js js/data/*.js`
+2. `node C:\SQL_SE~1\opencode\verify_listings.js`
+3. `node C:\SQL_SE~1\opencode\verify_integration.js` (cập nhật nếu thêm module/ID mới)
+4. Grep: không còn tham chiếu module cũ sót; `properties.js` & CSS cũ không đổi nội dung.

@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ChoThuêNhà — Bộ sưu tập không gian sống được tuyển chọn tại Huế: căn hộ cao cấp và villa riêng tư.">
+    <title>ChoThuêNhà — Không gian được tuyển chọn tại Huế</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <div class="ribbon">
+        <div class="container ribbon-inner">
+            <span>KHÔNG GIAN ĐƯỢC CHỌN LỌC TẠI HUẾ</span>
+            <span>Căn hộ · Villa · Ở dài hạn</span>
+        </div>
+    </div>
+
+    <header class="header" id="siteHeader">
+        <div class="container header-inner">
+            <a href="#kham-pha" class="logo">ChoThuê<span>Nhà</span></a>
+
+            <nav class="nav" id="mainNav">
+                <ul class="nav-list">
+                    <li><a href="#kham-pha" class="nav-link active"><i class="nav-dot"></i>Khám phá</a></li>
+                    <li><a href="#can-ho" class="nav-link"><i class="nav-dot"></i>Căn hộ</a></li>
+                    <li><a href="#villa" class="nav-link"><i class="nav-dot"></i>Villa</a></li>
+                    <li><a href="#kham-pha" class="nav-link"><i class="nav-dot"></i>Về Huế Home</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-actions">
+                <button class="fav-toggle" id="favToggle" data-filter="saved" aria-label="Xem căn đã lưu">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.5-1.5 2-3.5 2-5.5A5.5 5.5 0 0 0 15.5 3 5.5 5.5 0 0 0 12 4.7 5.5 5.5 0 0 0 8.5 3 5.5 5.5 0 0 0 3 8.5c0 2 .5 4 2 5.5l7 7z"></path></svg>
+                    <span class="fav-toggle-label">Đã lưu</span>
+                    <span class="fav-count" id="favCount">0</span>
+                </button>
+                <a href="#danh-sach" class="btn btn-coral btn-cta" data-filter="available">
+                    <span class="cta-full">Xem căn đang trống</span>
+                    <span class="cta-short">Căn trống</span>
+                </a>
+                <button class="nav-toggle" id="navToggle" aria-label="Mở menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main id="homeView">
+        <section class="hero" id="kham-pha">
+            <div class="container">
+                <div class="hero-canvas">
+                    <div class="hero-visual">
+                        <div class="hero-slide active">
+                            <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1200&q=80" alt="Phòng khách căn hộ ấm cúng nhiều ánh sáng tại Huế">
+                        </div>
+                        <div class="hero-slide">
+                            <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=1200&q=80" alt="Phòng khách căn hộ hiện đại với cửa sổ lớn tại Huế">
+                        </div>
+                        <div class="hero-slide">
+                            <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1200&q=80" alt="Villa hiện đại có hồ bơi và sân vườn tại Huế">
+                        </div>
+                    </div>
+
+                    <aside class="hero-panel">
+                        <span class="eyebrow">TUYỂN CHỌN CHO NHỊP SỐNG TẠI HUẾ</span>
+                        <h1 class="hero-title" id="heroTitle">Một nơi ở /<br>không chỉ để ở.</h1>
+                        <p class="hero-desc" id="heroDesc">Căn hộ cao cấp và villa riêng tư, được tuyển chọn cho nhu cầu ở dài hạn, gia đình hoặc phong cách sống yên tĩnh.</p>
+
+                        <div class="hero-ctas">
+                            <a href="#danh-sach" class="btn btn-coral" data-filter="all">Khám phá không gian</a>
+                            <a href="#danh-sach" class="link-arrow" data-filter="available">Xem căn đang trống <span>&rarr;</span></a>
+                        </div>
+
+                        <div class="hero-micro">
+                            <span>Căn hộ</span>
+                            <span>Villa</span>
+                            <span>Ở dài hạn</span>
+                        </div>
+
+                        <div class="availability-rail" id="teaserList"></div>
+
+                        <div class="hero-controls">
+                            <span class="hero-count" id="heroCount">01 / 03</span>
+                            <div class="hero-nav">
+                                <button class="control prev" id="prevSlide" aria-label="Slide trước">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                                </button>
+                                <div class="dots" id="dots"></div>
+                                <button class="control next" id="nextSlide" aria-label="Slide sau">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                </button>
+                            </div>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+        </section>
+
+        <section class="discovery">
+            <div class="container">
+                <div class="discovery-head">
+                    <span class="eyebrow">Khởi đầu</span>
+                    <h2>Bắt đầu từ điều quan trọng với bạn</h2>
+                </div>
+                <div class="discovery-grid">
+                    <a href="#danh-sach" class="discovery-chip" data-filter="center">
+                        <span class="chip-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="1.5"></rect><path d="M9 21v-4h6v4"></path><path d="M8 7h2"></path><path d="M8 11h2"></path><path d="M14 7h2"></path><path d="M14 11h2"></path></svg>
+                        </span>
+                        <span class="chip-body">
+                            <strong>Gần trung tâm</strong>
+                            <small>Căn hộ tại Phú Hội, Vĩnh Ninh, An Cựu</small>
+                        </span>
+                    </a>
+                    <a href="#danh-sach" class="discovery-chip" data-filter="light">
+                        <span class="chip-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="M4.9 4.9l1.4 1.4"></path><path d="M17.7 17.7l1.4 1.4"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="M4.9 19.1l1.4-1.4"></path><path d="M17.7 6.3l1.4-1.4"></path></svg>
+                        </span>
+                        <span class="chip-body">
+                            <strong>Nhiều ánh sáng</strong>
+                            <small>Không gian cửa sổ lớn, đón sáng</small>
+                        </span>
+                    </a>
+                    <a href="#danh-sach" class="discovery-chip" data-filter="family">
+                        <span class="chip-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.9"></path><path d="M16 3.1a4 4 0 0 1 0 7.8"></path></svg>
+                        </span>
+                        <span class="chip-body">
+                            <strong>Không gian cho gia đình</strong>
+                            <small>Villa và căn hộ từ 3 phòng ngủ</small>
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section class="section section-apartment" id="can-ho">
+            <div class="container">
+                <div class="section-head">
+                    <div class="section-head-main">
+                        <span class="section-index">01</span>
+                        <div class="section-head-copy">
+                            <span class="eyebrow">Bộ sưu tập căn hộ</span>
+                            <h2>Căn hộ có thể bắt đầu<br>một nhịp sống mới.</h2>
+                        </div>
+                    </div>
+                    <div class="section-head-side">
+                        <p>Những căn hộ hiện đại, đầy đủ tiện nghi và vị trí thuận tiện cho nhịp sống thành phố.</p>
+                        <a href="#danh-sach" class="link-arrow" data-filter="all">Khám phá tất cả <span>&rarr;</span></a>
+                    </div>
+                </div>
+
+                <div class="runway">
+                    <article class="card-featured" data-property="can-ho-hoang-thanh" role="button" tabindex="0">
+                        <div class="card-media">
+                            <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=1000&q=80" alt="Phòng khách căn hộ Hoàng Thành nhiều ánh sáng tại Huế">
+                            <span class="badge badge-available">Đang trống</span>
+                            <button class="fav" aria-label="Lưu căn hộ">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.5-1.5 2-3.5 2-5.5A5.5 5.5 0 0 0 15.5 3 5.5 5.5 0 0 0 12 4.7 5.5 5.5 0 0 0 8.5 3 5.5 5.5 0 0 0 3 8.5c0 2 .5 4 2 5.5l7 7z"></path></svg>
+                            </button>
+                            <button class="compare-add" type="button" data-compare="can-ho-hoang-thanh" aria-label="So sánh Căn hộ Hoàng Thành">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="12" height="12" rx="2"></rect><rect x="3" y="9" width="12" height="12" rx="2"></rect></svg>
+                                <span>So sánh</span>
+                            </button>
+                        </div>
+                        <div class="card-info">
+                            <div class="card-top">
+                                <div>
+                                    <h3>Căn hộ Hoàng Thành</h3>
+                                    <p class="card-loc">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 1 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                                        Phú Hội, TP. Huế
+                                    </p>
+                                </div>
+                                <div class="card-price"><strong>12 triệu</strong><small>/tháng</small></div>
+                            </div>
+                            <ul class="card-meta">
+                                <li>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3"></path><path d="M21 8V5a2 2 0 0 0-2-2h-3"></path><path d="M3 16v3a2 2 0 0 0 2 2h3"></path><path d="M16 21h3a2 2 0 0 0 2-2v-3"></path></svg>
+                                    85 m²
+                                </li>
+                                <li>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20v-8a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v8"></path><path d="M2 20v-3"></path><path d="M22 20v-3"></path><path d="M6 10V6a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v4"></path></svg>
+                                    2 phòng ngủ
+                                </li>
+                            </ul>
+                            <button class="btn btn-view">Xem không gian</button>
+                        </div>
+                    </article>
+
+                    <div class="runway-rail">
+                        <article class="card-sub" data-property="can-ho-ngoc-anh" role="button" tabindex="0">
+                            <div class="card-media">
+                                <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=700&q=80" alt="Phòng khách căn hộ Ngọc Anh tại Huế">
+                                <span class="badge badge-upcoming">Sắp trống 12/09</span>
+                                <button class="fav" aria-label="Lưu căn hộ">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.5-1.5 2-3.5 2-5.5A5.5 5.5 0 0 0 15.5 3 5.5 5.5 0 0 0 12 4.7 5.5 5.5 0 0 0 8.5 3 5.5 5.5 0 0 0 3 8.5c0 2 .5 4 2 5.5l7 7z"></path></svg>
+                                </button>
+                                <button class="compare-add" type="button" data-compare="can-ho-ngoc-anh" aria-label="So sánh Căn hộ Ngọc Anh">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="12" height="12" rx="2"></rect><rect x="3" y="9" width="12" height="12" rx="2"></rect></svg>
+                                    <span>So sánh</span>
+                                </button>
+                            </div>
+                            <div class="card-info">
+                                <h3>Căn hộ Ngọc Anh</h3>
+                                <p class="card-loc">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 1 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                                    Vĩnh Ninh, TP. Huế
+                                </p>
+                                <div class="card-price"><strong>9,5 triệu</strong><small>/tháng</small></div>
+                                <ul class="card-meta">
+                                    <li>
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3"></path><path d="M21 8V5a2 2 0 0 0-2-2h-3"></path><path d="M3 16v3a2 2 0 0 0 2 2h3"></path><path d="M16 21h3a2 2 0 0 0 2-2v-3"></path></svg>
+                                        68 m²
+                                    </li>
+                                    <li>
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20v-8a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v8"></path><path d="M2 20v-3"></path><path d="M22 20v-3"></path><path d="M6 10V6a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v4"></path></svg>
+                                        1 phòng ngủ
+                                    </li>
+                                </ul>
+                                <button class="btn btn-view">Xem không gian</button>
+                            </div>
+                        </article>
+
+                        <article class="card-sub" data-property="can-ho-an-cuu" role="button" tabindex="0">
+                            <div class="card-media">
+                                <img src="https://images.unsplash.com/photo-1493809842364-78817add7ffb?auto=format&fit=crop&w=700&q=80" alt="Không gian căn hộ An Cựu tại Huế">
+                                <span class="badge badge-available">Đang trống</span>
+                                <button class="fav" aria-label="Lưu căn hộ">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.5-1.5 2-3.5 2-5.5A5.5 5.5 0 0 0 15.5 3 5.5 5.5 0 0 0 12 4.7 5.5 5.5 0 0 0 8.5 3 5.5 5.5 0 0 0 3 8.5c0 2 .5 4 2 5.5l7 7z"></path></svg>
+                                </button>
+                                <button class="compare-add" type="button" data-compare="can-ho-an-cuu" aria-label="So sánh Căn hộ An Cựu">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="12" height="12" rx="2"></rect><rect x="3" y="9" width="12" height="12" rx="2"></rect></svg>
+                                    <span>So sánh</span>
+                                </button>
+                            </div>
+                            <div class="card-info">
+                                <h3>Căn hộ An Cựu</h3>
+                                <p class="card-loc">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 1 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                                    An Cựu, TP. Huế
+                                </p>
+                                <div class="card-price"><strong>15 triệu</strong><small>/tháng</small></div>
+                                <ul class="card-meta">
+                                    <li>
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3"></path><path d="M21 8V5a2 2 0 0 0-2-2h-3"></path><path d="M3 16v3a2 2 0 0 0 2 2h3"></path><path d="M16 21h3a2 2 0 0 0 2-2v-3"></path></svg>
+                                        110 m²
+                                    </li>
+                                    <li>
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20v-8a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v8"></path><path d="M2 20v-3"></path><path d="M22 20v-3"></path><path d="M6 10V6a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v4"></path></svg>
+                                        3 phòng ngủ
+                                    </li>
+                                </ul>
+                                <button class="btn btn-view">Xem không gian</button>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section section-list" id="danh-sach">
+            <div class="container">
+                <div class="section-head">
+                    <div class="section-head-main">
+                        <span class="section-index">02</span>
+                        <div class="section-head-copy">
+                            <span class="eyebrow">Danh sách tuyển chọn</span>
+                            <h2>Khám phá nơi ở theo nhịp của bạn.</h2>
+                        </div>
+                    </div>
+                    <div class="section-head-side">
+                        <p>Những căn hộ và villa đang mở để bạn bắt đầu một hành trình sống tại Huế.</p>
+                        <span class="list-count" id="resultsCount">10 nơi ở đang được giới thiệu</span>
+                    </div>
+                </div>
+
+                <div class="tabs" role="tablist" aria-label="Lọc danh sách" id="categoryTabs">
+                    <button class="tab active" data-cat="all" role="tab" aria-selected="true">Tất cả</button>
+                    <button class="tab" data-cat="Căn hộ" role="tab" aria-selected="false">Căn hộ</button>
+                    <button class="tab" data-cat="Villa" role="tab" aria-selected="false">Villa</button>
+                    <button class="tab" data-cat="Đang trống" role="tab" aria-selected="false">Đang trống</button>
+                    <button class="tab" data-cat="Sắp trống" role="tab" aria-selected="false">Sắp trống</button>
+                </div>
+
+                <div class="list-toolbar">
+                    <div class="list-search">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                        <input type="search" id="searchInput" placeholder="Tìm theo tên, khu vực, tiện ích..." aria-label="Tìm kiếm căn">
+                    </div>
+                    <div class="list-sort">
+                        <label for="sortSelect">Sắp xếp</label>
+                        <select id="sortSelect" aria-label="Sắp xếp danh sách">
+                            <option value="default">Khuyến nghị</option>
+                            <option value="price_asc">Giá thấp → cao</option>
+                            <option value="price_desc">Giá cao → thấp</option>
+                            <option value="area_asc">Diện tích nhỏ → lớn</option>
+                            <option value="area_desc">Diện tích lớn → nhỏ</option>
+                            <option value="beds_desc">Nhiều phòng ngủ nhất</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="active-chips" id="activeChips" aria-live="polite"></div>
+
+                <div class="list-grid" id="propertyList"></div>
+            </div>
+        </section>
+
+        <section class="section section-villa" id="villa">
+            <div class="container">
+                <div class="villa-band">
+                    <div class="villa-copy">
+                        <span class="eyebrow">Villa &amp; nhà vườn</span>
+                        <h2>Một khoảng riêng /<br>để trở về.</h2>
+                        <p>Villa có sân vườn, ánh sáng tự nhiên và không gian rộng rãi — dành cho gia đình hoặc người yêu sự yên tĩnh.</p>
+                        <a href="#danh-sach" class="btn btn-outline-light" data-filter="villa">Xem lựa chọn villa</a>
+                    </div>
+
+                    <div class="villa-composition">
+                        <article class="villa-card villa-main" data-property="villa-thuy-bieu" role="button" tabindex="0">
+                            <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1000&q=80" alt="Villa Thuỷ Biều với mặt tiền hiện đại tại Huế">
+                            <span class="badge badge-villa">Villa</span>
+                            <div class="villa-card-shade"></div>
+                            <div class="villa-overlay">
+                                <h3>Villa Thuỷ Biều</h3>
+                                <p class="card-loc">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 1 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                                    Thủy Biều, TP. Huế
+                                </p>
+                                <div class="card-price"><strong>25 triệu</strong><small>/tháng</small></div>
+                                <ul class="villa-amenities">
+                                    <li>
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9c1.3-1.2 2.7-1.2 4 0s2.7 1.2 4 0 2.7-1.2 4 0 2.7 1.2 4 0"></path><path d="M2 15c1.3-1.2 2.7-1.2 4 0s2.7 1.2 4 0 2.7-1.2 4 0 2.7 1.2 4 0"></path></svg>
+                                        Hồ bơi
+                                    </li>
+                                    <li>
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 19a4 4 0 0 1-2.24-7.32A3.5 3.5 0 0 1 9 6.03V6a3 3 0 1 1 6 0v.03a3.5 3.5 0 0 1 3.24 5.65A4 4 0 0 1 16 19Z"></path><path d="M12 19v3"></path></svg>
+                                        Sân vườn
+                                    </li>
+                                    <li>
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11l1.5-4.5A2 2 0 0 1 8.4 5h7.2a2 2 0 0 1 1.9 1.5L19 11"></path><path d="M3 11h18v4a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1v-1H6v1a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"></path></svg>
+                                        Gara
+                                    </li>
+                                </ul>
+                            </div>
+                        </article>
+
+                        <article class="villa-card villa-thumb" data-property="villa-kim-long" role="button" tabindex="0">
+                            <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=600&q=80" alt="Villa Kim Long hiện đại với hồ bơi tại Huế">
+                            <span class="villa-tag">Villa Kim Long</span>
+                        </article>
+                        <article class="villa-card villa-thumb" data-property="villa-vy-da" role="button" tabindex="0">
+                            <img src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=600&q=80" alt="Villa Vỹ Dạ với khuôn viên rộng tại Huế">
+                            <span class="villa-tag">Villa Vỹ Dạ</span>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="concierge">
+            <div class="container concierge-inner">
+                <h2>Chưa rõ căn nào hợp với bạn?</h2>
+                <a href="#danh-sach" class="btn btn-coral btn-lg" data-filter="all">Bắt đầu hành trình 60 giây</a>
+            </div>
+        </section>
+    </main>
+
+    <section class="detail" id="detailView" hidden>
+        <div class="container">
+            <nav class="detail-crumb" aria-label="Breadcrumb">
+                <a href="#kham-pha">Trang chủ</a>
+                <span class="crumb-sep">/</span>
+                <span>Bất động sản</span>
+                <span class="crumb-sep">/</span>
+                <span id="crumbType">Căn hộ</span>
+                <span class="crumb-sep">/</span>
+                <strong id="crumbName">Căn hộ Hoàng Thành</strong>
+            </nav>
+
+            <button class="detail-back" id="detailBack" aria-label="Quay lại danh sách">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                Quay lại danh sách
+            </button>
+
+            <div class="detail-layout">
+                <div class="detail-gallery">
+                    <div class="gallery-main">
+                        <img id="galleryMain" src="" alt="">
+                        <span class="badge badge-available" id="galleryBadge">Đang trống</span>
+                    </div>
+                    <div class="gallery-thumbs" id="galleryThumbs"></div>
+                </div>
+
+                <aside class="detail-summary">
+                    <div class="summary-head">
+                        <span class="eyebrow" id="dtType">Căn hộ</span>
+                        <span class="summary-status" id="dtStatus">Đang trống</span>
+                    </div>
+                    <h1 id="dtName">Căn hộ Hoàng Thành</h1>
+                    <p class="card-loc" id="dtLoc">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 1 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                        <span id="dtLocText">Phú Hội, TP. Huế</span>
+                    </p>
+                    <div class="card-price summary-price" id="dtPrice"><strong>12 triệu</strong><small>/tháng</small></div>
+
+                    <ul class="detail-meta" id="dtMeta"></ul>
+
+                    <div class="rent-box">
+                        <h4>Thông tin thuê</h4>
+                        <ul id="dtRent"></ul>
+                    </div>
+
+                    <div class="detail-ctas">
+                        <button class="btn btn-coral" id="dtInterest">Quan tâm căn này</button>
+                        <button class="btn btn-outline" id="dtShare">Chia sẻ</button>
+                    </div>
+                </aside>
+            </div>
+
+            <div class="detail-content">
+                <div class="detail-block">
+                    <h3>Về không gian này</h3>
+                    <div class="detail-desc" id="dtDesc"></div>
+                </div>
+
+                <div class="detail-block">
+                    <h3>Tiện ích &amp; không gian</h3>
+                    <ul class="feature-grid" id="dtFeatures"></ul>
+                </div>
+
+                <div class="detail-block">
+                    <h3>Khu vực xung quanh</h3>
+                    <ul class="nearby-list" id="dtNearby"></ul>
+                </div>
+
+                <div class="detail-block">
+                    <h3>Căn tương tự</h3>
+                    <div class="list-grid" id="dtSimilar"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="compare-bar" id="compareBar" hidden>
+        <div class="container compare-bar-inner">
+            <div class="compare-info">
+                <span class="compare-title">So sánh</span>
+                <span class="compare-count" id="compareCount">0</span><small>/3</small>
+            </div>
+            <div class="compare-list" id="compareList"></div>
+            <button class="btn btn-coral btn-sm" id="compareOpen" type="button">So sánh</button>
+            <button class="compare-clear" id="compareClear" type="button">Xóa tất cả</button>
+        </div>
+    </div>
+
+    <div class="compare-panel" id="comparePanel" hidden>
+        <div class="compare-panel-backdrop" data-compare-close></div>
+        <div class="compare-panel-card">
+            <div class="compare-panel-head">
+                <h2>So sánh bất động sản</h2>
+                <button class="compare-panel-close" id="compareClose" aria-label="Đóng bảng so sánh">&times;</button>
+            </div>
+            <div class="compare-table" id="compareTable"></div>
+        </div>
+    </div>
+
+    <div class="inquiry" id="inquiryModal" hidden>
+        <div class="inquiry-backdrop" data-inquiry-close></div>
+        <div class="inquiry-card" role="dialog" aria-modal="true" aria-labelledby="inquiryTitle">
+            <button class="inquiry-close" data-inquiry-close aria-label="Đóng">&#10005;</button>
+            <h2 id="inquiryTitle">Yêu cầu quan tâm</h2>
+            <p class="inquiry-demo-note">Bản demo frontend — không gửi dữ liệu thật.</p>
+            <form id="inquiryForm" novalidate>
+                <div class="field">
+                    <label for="iqProperty">Căn quan tâm</label>
+                    <input type="text" id="iqProperty" readonly>
+                </div>
+                <div class="field">
+                    <label for="iqName">Họ và tên</label>
+                    <input type="text" id="iqName" required>
+                </div>
+                <div class="field">
+                    <label for="iqPhone">Số điện thoại</label>
+                    <input type="tel" id="iqPhone" required>
+                </div>
+                <div class="field">
+                    <label for="iqNote">Lời nhắn</label>
+                    <textarea id="iqNote" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn btn-coral">Gửi yêu cầu (demo)</button>
+            </form>
+            <div class="inquiry-success" id="inquirySuccess" hidden>
+                <p>Cảm ơn bạn! Đây là bản demo nên thông tin của bạn không được gửi đi đâu cả.</p>
+                <button type="button" class="btn btn-outline" data-inquiry-close>Đóng</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast" role="status" aria-live="polite"></div>
+
+    <script src="js/data/properties.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/listings.js"></script>
+    <script src="js/favorites.js"></script>
+    <script src="js/filters.js"></script>
+    <script src="js/compare.js"></script>
+    <script src="js/detail.js"></script>
+    <script src="js/inquiry.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
