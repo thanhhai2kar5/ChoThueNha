@@ -26,7 +26,7 @@
             </nav>
 
             <div class="header-actions">
-                <button class="fav-toggle" id="favToggle" data-filter="saved" aria-label="Xem căn đã lưu">
+                <button class="fav-toggle" id="favToggle" data-filter="saved" aria-label="Xem căn đã lưu" aria-pressed="false">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.5-1.5 2-3.5 2-5.5A5.5 5.5 0 0 0 15.5 3 5.5 5.5 0 0 0 12 4.7 5.5 5.5 0 0 0 8.5 3 5.5 5.5 0 0 0 3 8.5c0 2 .5 4 2 5.5l7 7z"></path></svg>
                     <span class="fav-toggle-label">Đã lưu</span>
                     <span class="fav-count" id="favCount">0</span>
@@ -292,6 +292,15 @@
                         <p>Những căn hộ và villa đang mở để bạn bắt đầu một hành trình sống tại Huế.</p>
                         <span class="list-count" id="resultsCount">10 nơi ở đang được giới thiệu</span>
                     </div>
+                </div>
+
+                <div class="saved-context" id="savedContext" hidden>
+                    <div class="saved-context-body">
+                        <span class="eyebrow">Danh sách đã lưu</span>
+                        <h3 class="saved-context-title">Những nơi ở bạn muốn xem lại.</h3>
+                        <p class="saved-context-copy">Các căn này được lưu trên thiết bị của bạn.</p>
+                    </div>
+                    <button type="button" class="btn btn-coral" data-exit-saved>Khám phá tất cả căn</button>
                 </div>
 
                 <div class="tabs" role="tablist" aria-label="Lọc danh sách" id="categoryTabs">

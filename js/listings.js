@@ -87,13 +87,21 @@
         return list;
     }
 
-    function renderList(list) {
+    function renderList(list, options) {
         if (!list) list = getFiltered();
         if (list.length === 0) {
             resultsCount.textContent = "0 nơi ở phù hợp";
-            propertyList.innerHTML =
-                '<div class="list-empty"><p>Không có căn nào phù hợp với bộ lọc hiện tại.</p>' +
-                '<button type="button" class="btn btn-outline" data-clear-filters>Xóa bộ lọc</button></div>';
+            if (options && options.emptyVariant === "saved") {
+                propertyList.innerHTML =
+                    '<div class="list-empty list-empty-saved">' +
+                    '<h3 class="list-empty-title">Chưa có căn nào được lưu</h3>' +
+                    '<p>Bấm biểu tượng trái tim ở một căn phù hợp để lưu lại tại đây.</p>' +
+                    '<button type="button" class="btn btn-outline" data-exit-saved>Khám phá danh sách</button></div>';
+            } else {
+                propertyList.innerHTML =
+                    '<div class="list-empty"><p>Không có căn nào phù hợp với bộ lọc hiện tại.</p>' +
+                    '<button type="button" class="btn btn-outline" data-clear-filters>Xóa bộ lọc</button></div>';
+            }
         } else {
             resultsCount.textContent = list.length + " nơi ở đang được giới thiệu";
             propertyList.innerHTML = list.map(cardHTML).join("");

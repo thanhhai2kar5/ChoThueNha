@@ -73,13 +73,17 @@
         if (!section) return;
         selectedKind = "";
         selectedPrice = "";
-        opened = false;
+        opened = true;
         completed = false;
-        if (panel) panel.hidden = true;
+        if (startBtn) startBtn.hidden = true;
+        if (panel) panel.hidden = false;
         if (done) done.hidden = true;
-        if (startBtn) startBtn.hidden = false;
+        if (step1) step1.hidden = false;
+        if (step2) step2.hidden = true;
         renderStep();
         syncChoices();
+        var first = section.querySelector("[data-concierge-kind]");
+        if (first && first.focus) first.focus();
     }
 
     function getState() {

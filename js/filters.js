@@ -11,7 +11,7 @@
     "use strict";
 
     var L;
-    var searchInput, sortSelect, chipsWrap, priceWrap;
+    var searchInput, sortSelect, chipsWrap, priceWrap, savedContext, favToggle;
     var q = "";
     var sort = "default";
     var priceRange = "";
@@ -89,9 +89,10 @@
             };
             list = list.slice().sort(fns[sort]);
         }
-        L.renderList(list);
+        L.renderList(list, savedView ? { emptyVariant: "saved" } : undefined);
         renderChips();
         renderPriceButtons();
+        renderSavedContext();
         syncUrl();
         if (scroll) {
             var ds = document.getElementById("danh-sach");
@@ -101,16 +102,24 @@
 
     function setFilter(kind) {
         if (kind === "saved") {
-            if (window.Favorites.count() === 0) {
-                UI.toast("Chưa có căn nào được lưu.");
-                return;
-            }
             savedView = true;
             L.setFilter("all");
         } else {
             savedView = false;
             L.setFilter(kind);
         }
+        apply(true);
+    }
+
+    function renderSavedContext() {
+        if (savedContext) savedContext.hidden = !savedView;
+        if (favToggle) favToggle.setAttribute("aria-pressed", savedView ? "true" : "false");
+    }
+
+    function exitSavedView() {
+        if (!savedView) return;
+        savedView = false;
+        L.setFilter("all");
         apply(true);
     }
 
@@ -261,6 +270,8 @@
         sortSelect = document.getElementById("sortSelect");
         chipsWrap = document.getElementById("activeChips");
         priceWrap = document.getElementById("priceRangeGroup");
+        savedContext = document.getElementById("savedContext");
+        favToggle = document.getElementById("favToggle");
 
         if (searchInput) {
             searchInput.addEventListener("input", function () {
@@ -281,6 +292,12 @@
             if (cl) {
                 e.preventDefault();
                 clearAll();
+                return;
+            }
+            var ex = e.target.closest ? e.target.closest("[data-exit-saved]") : null;
+            if (ex) {
+                e.preventDefault();
+                exitSavedView();
                 return;
             }
             var pr = e.target.closest ? e.target.closest("[data-price-range]") : null;
@@ -309,6 +326,7 @@
         setPriceRange: setPriceRange,
         applyDiscovery: applyDiscovery,
         getDiscoveryState: getDiscoveryState,
+        exitSavedView: exitSavedView,
         clearAll: clearAll,
         getState: function () {
             return { q: q, sort: sort, priceRange: priceRange, savedView: savedView };

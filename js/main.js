@@ -164,11 +164,23 @@
             navToggle.classList.toggle("open");
         });
 
-        nav.querySelectorAll(".nav-link").forEach(function (link) {
+        var navLinks = nav.querySelectorAll(".nav-link");
+
+        function setNavActive(activeLink) {
+            navLinks.forEach(function (link) {
+                var on = link === activeLink;
+                link.classList.toggle("active", on);
+                if (on) link.setAttribute("aria-current", "page");
+                else link.removeAttribute("aria-current");
+            });
+        }
+
+        navLinks.forEach(function (link) {
             link.addEventListener("click", function () {
                 nav.classList.remove("open");
                 navToggle.classList.remove("open");
-                if (!homeView.hidden) D.closeDetail();
+                setNavActive(link);
+                if (!homeView.hidden || link.hasAttribute("data-filter")) D.closeDetail();
             });
         });
 

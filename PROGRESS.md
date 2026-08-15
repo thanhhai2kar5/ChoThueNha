@@ -253,6 +253,20 @@ Chuỗi phụ thuộc: `properties → ui → listings → favorites → filters
   nav-link Căn hộ/Villa dùng `data-filter` thật + scroll tới `#danh-sach`, thêm helper
   `setNavActive` trong `js/main.js` (toggle `.active` + `aria-current` cho nav-link).
 
+### 9. Feature: Saved Homes — danh sách căn đã lưu (ĐANG LÀM, chờ review — CHƯA COMMIT)
+- Banner ngữ cảnh `#savedContext` (ẩn mặc định) hiện khi `savedView` active (eyebrow "Danh sách đã lưu",
+  title "Những nơi ở bạn muốn xem lại.", copy "Các căn này được lưu trên thiết bị của bạn.", button
+  "Khám phá tất cả căn" `data-exit-saved`).
+- `Listings.renderList(list, options)`: `options.emptyVariant === "saved"` → saved empty state riêng
+  ("Chưa có căn nào được lưu" / "Bấm biểu tượng trái tim ở một căn phù hợp để lưu lại tại đây." /
+  "Khám phá danh sách" `data-exit-saved`); mọi empty khác giữ generic cũ.
+- `Filters`: bỏ toast guard khi mở saved với 0 căn; `apply()` truyền `{ emptyVariant:"saved" }` khi
+  `savedView`; `renderSavedContext()` toggle banner + `#favToggle` aria-pressed sau mỗi apply;
+  `exitSavedView()` (savedView=false, filter=all, apply(true), KHÔNG xóa localStorage/q/priceRange/sort);
+  delegation `[data-exit-saved]` trong filters.js; export `exitSavedView`.
+- Reuse `favorites:changed` để unsave trong saved view re-render ngay (không đụng Favorites).
+- Trạng thái: **in progress, awaiting review** — chưa commit. (Cập nhật sau review Live Server desktop + 390px.)
+
 ## Còn lại — Ưu tiên 2: Vòng "quality polish" (từng được yêu cầu, chưa làm)
 Breadcrumb có "Khám phá"; back button giữ nguyên bộ lọc; thẻ quick-facts;
 nút trái tim toggle + toast (đã có toggle, còn toast copy);
