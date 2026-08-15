@@ -7,7 +7,9 @@
 
 - **Giai đoạn**: Refactor module ĐÃ XONG + Gói nghiệp vụ frontend ĐÃ XONG (đã verify).
   Còn lại: vòng "quality polish" (Ưu tiên 2) chưa làm.
-- **Trạng thái git**: chỉ có `Initial commit`; toàn bộ `index.html`, `css/`, `js/` đang UNTRACKED (chưa commit).
+- **Trạng thái git**: nhánh `developer`, đồng bộ `origin/developer`. Đã có commits:
+  `56baa3f` (feat: build Hue Home property marketplace — gói nghiệp vụ) trên nền `031ccbd` (Initial commit).
+  Working tree CLEAN.
 - **Môi trường**: không internet, không browser → verify bằng `node --check` + smoke test vm.
 
 ## Kiến trúc hiện tại (ĐANG CHẠY)
@@ -69,6 +71,14 @@ Chuỗi phụ thuộc: `properties → ui → listings → favorites → filters
   (Tất cả 10 / Căn hộ 6 / Villa 4 / Đang trống 7 / Sắp trống 3 / center 4 / light 4 / family 6);
   hash detail + back; gallery 1+3 thumb; breadcrumb; 3 căn tương tự; toast; trái tim `.fav` giờ
   toggle Favorites (fill coral khi active + badge #favCount).
+
+### 3. Fix overlay compare/inquiry bị hiện dù có `hidden`
+- Nguyên nhân: `.compare-panel` và `.inquiry` khai báo `display: flex`, ghi đè UA `[hidden] { display: none }`
+  (specificity ngang nhau, rule sau thắng) → hai lớp modal luôn hiển thị chồng lên nhau, chặn click.
+- Sửa: thêm ở CUỐI `css/style.css`:
+  `.compare-panel[hidden], .inquiry[hidden] { display: none !important; }`
+  (specificity (0,2,0) + !important). JS so sánh (`panel.hidden`) & inquiry (`modal.hidden`) không đổi.
+- Verify: `node --check` sạch; smoke test vm vẫn pass; grep CSS xác nhận rule nằm cuối file, CSS cũ không đổi.
 
 ## Còn lại — Ưu tiên 2: Vòng "quality polish" (từng được yêu cầu, chưa làm)
 Breadcrumb có "Khám phá"; back button giữ nguyên bộ lọc; thẻ quick-facts; feature-grid 3/2/1 col;

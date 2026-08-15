@@ -2515,3 +2515,8 @@ body.compare-open {
         padding: 20px;
     }
 }
+
+.compare-panel[hidden],
+.inquiry[hidden] {
+    display: none !important;
+}
