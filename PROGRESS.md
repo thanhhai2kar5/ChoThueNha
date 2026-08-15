@@ -247,6 +247,11 @@ Chuỗi phụ thuộc: `properties → ui → listings → favorites → filters
   URL hợp lệ `?filter=center&price=10_15` → prefill + auto-open; reload URL không hợp lệ
   `?filter=abc&price=xyz` → không crash, collapsed.
 - **Trạng thái**: ĐANG LÀM (chưa commit — chờ review Live Server).
+- **Polish (sau review Live Server, chưa commit)**: fix hành vi `Làm lại` — giờ xóa lựa chọn và ở
+  LẠI trong panel tại Bước 1/2 (không đóng phiếu, không đổi filter list); `Điều chỉnh lại` giữ
+  current selection. Đồng thời bỏ ribbon navy phía trên header (xóa khỏi `index.html` + CSS),
+  nav-link Căn hộ/Villa dùng `data-filter` thật + scroll tới `#danh-sach`, thêm helper
+  `setNavActive` trong `js/main.js` (toggle `.active` + `aria-current` cho nav-link).
 
 ## Còn lại — Ưu tiên 2: Vòng "quality polish" (từng được yêu cầu, chưa làm)
 Breadcrumb có "Khám phá"; back button giữ nguyên bộ lọc; thẻ quick-facts;

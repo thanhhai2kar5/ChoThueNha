@@ -82,28 +82,6 @@ button {
     cursor: pointer;
 }
 
-/* ========== Utility ribbon ========== */
-.ribbon {
-    background: var(--ink);
-    color: rgba(255, 255, 255, 0.78);
-    font-size: 0.72rem;
-    font-weight: 500;
-}
-
-.ribbon-inner {
-    display: flex;
-    justify-content: space-between;
-    gap: 16px;
-    padding-top: 9px;
-    padding-bottom: 9px;
-}
-
-.ribbon-inner span:first-child {
-    letter-spacing: 0.14em;
-    font-weight: 600;
-    color: #FFFFFF;
-}
-
 /* ========== Header ========== */
 .header {
     position: sticky;
@@ -372,7 +350,7 @@ button {
 
 .hero-canvas {
     display: flex;
-    height: 560px;
+    min-height: 560px;
     overflow: hidden;
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-md);
@@ -409,7 +387,7 @@ button {
     flex: 1;
     background: #FFFFFF;
     color: var(--text);
-    padding: 40px 38px 32px;
+    padding: 34px 38px 24px;
     display: flex;
     flex-direction: column;
     position: relative;
@@ -422,14 +400,15 @@ button {
     line-height: 1.14;
     letter-spacing: -0.01em;
     color: var(--ink);
-    margin: 14px 0 14px;
+    margin: 12px 0 12px;
 }
 
 .hero-desc {
     font-size: 0.95rem;
     color: var(--text);
     max-width: 400px;
-    margin-bottom: 20px;
+    min-height: 4.8em;
+    margin-bottom: 18px;
 }
 
 .hero-ctas {
@@ -451,7 +430,7 @@ button {
     display: flex;
     align-items: center;
     gap: 0;
-    margin: 20px 0 16px;
+    margin: 16px 0 14px;
     font-size: 0.78rem;
     font-weight: 600;
     color: var(--muted);
@@ -476,8 +455,8 @@ button {
 .teaser {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 8px;
+    gap: 11px;
+    padding: 7px;
     border: 1px solid var(--line);
     border-radius: var(--radius-sm);
     background: #FFFFFF;
@@ -485,8 +464,8 @@ button {
 }
 
 .teaser-thumb {
-    width: 50px;
-    height: 50px;
+    width: 44px;
+    height: 44px;
     border-radius: 9px;
     overflow: hidden;
     flex-shrink: 0;
@@ -535,7 +514,7 @@ button {
     align-items: center;
     justify-content: space-between;
     margin-top: auto;
-    padding-top: 16px;
+    padding-top: 14px;
 }
 
 .hero-count {
@@ -596,9 +575,7 @@ button {
 
 /* ========== Search hub ========== */
 .search-hub {
-    position: relative;
-    z-index: 30;
-    margin-top: -34px;
+    margin-top: 28px;
 }
 
 .search-hub-card {
@@ -2471,11 +2448,11 @@ body.compare-open {
     }
 
     .hero-canvas {
-        height: 520px;
+        min-height: 520px;
     }
 
     .hero-panel {
-        padding: 32px 28px 26px;
+        padding: 30px 28px 24px;
     }
 
     .hero-title {
@@ -2531,15 +2508,6 @@ body.compare-open {
 
 /* ========== Responsive: mobile ========== */
 @media (max-width: 767px) {
-    .ribbon-inner {
-        justify-content: center;
-        font-size: 0.66rem;
-    }
-
-    .ribbon-inner span:last-child {
-        display: none;
-    }
-
     .header-inner {
         grid-template-columns: 1fr auto;
         height: 64px;
@@ -2626,6 +2594,7 @@ body.compare-open {
     .hero-canvas {
         flex-direction: column;
         height: auto;
+        min-height: 0;
     }
 
     .hero-visual {
@@ -2661,7 +2630,7 @@ body.compare-open {
     }
 
     .search-hub {
-        margin-top: 0;
+        margin-top: 16px;
     }
 
     .search-hub-card {
@@ -2947,8 +2916,8 @@ body.compare-open {
     }
 
     .control {
-        width: 40px;
-        height: 40px;
+        width: 44px;
+        height: 44px;
     }
 
     .discovery-chip {
