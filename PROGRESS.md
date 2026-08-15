@@ -324,6 +324,21 @@ Chuỗi phụ thuộc: `properties → ui → listings → favorites → filters
 - Giữ nguyên: gallery, breadcrumb, routing/hash, compare, inquiry, visit, dữ liệu properties.
 - Trạng thái: **in progress, awaiting review** — chưa commit. (Cập nhật sau review Live Server desktop + 390px.)
 
+### 13. Feature: Living Collections (Bộ sưu tập theo nhu cầu sống) (ĐANG LÀM, chờ review — CHƯA COMMIT)
+- Module mới `js/collections.js` (nạp SAU filters, TRƯỚC concierge): chỉ phơi `window.Collections = { activate }`.
+  Delegation trong phạm vi `#livingCollections` (`[data-collection-kind]`), không đụng document.
+- Thay block `.discovery` cũ bằng section `#livingCollections`: eyebrow "Khám phá theo nhu cầu sống",
+  heading "Bắt đầu từ điều bạn cần nhất.", copy ngắn, 4 card đúng thứ tự:
+  Gần trung tâm / Nhiều ánh sáng / Phù hợp gia đình / Có thể nhận nhà sớm, mô tả trung tính,
+  cue "Khám phá lựa chọn →", KHÔNG số lượng/giá/review.
+- Click card → `Filters.applyDiscovery(kind, "")` ĐÚNG MỘT LẦN (kind center/light/family/available) →
+  chính `apply(true)` scroll mượt tới `#danh-sach`; URL/chips/results do Filters vẽ. Invalid kind rơi
+  về "all" qua validation sẵn có của applyDiscovery. Không bỏ q/sort.
+- Trạng thái card: class `is-active` tạm ~700ms rồi gỡ; không duy trì state thứ hai ngoài Filters.
+- CSS thêm mới (chỉ thêm): `.collections-head/-grid/-card`, grid 4 cột desktop, 2 cột ≤1023px,
+  1 cột ≤767px (tap ≥44px, không overflow ngang). Giữ nguyên: filters, saved, compare, detail,
+  visit schedule, Home Finder, routing, header.
+
 ## Còn lại — Ưu tiên 2: Vòng "quality polish" (từng được yêu cầu, chưa làm)
 Breadcrumb có "Khám phá"; back button giữ nguyên bộ lọc; thẻ quick-facts;
 nút trái tim toggle + toast (đã có toggle, còn toast copy);

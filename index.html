@@ -120,40 +120,54 @@
             </div>
         </section>
 
-        <section class="discovery">
+        <section class="discovery collections" id="livingCollections">
             <div class="container">
-                <div class="discovery-head">
-                    <span class="eyebrow">Khởi đầu</span>
-                    <h2>Bắt đầu từ điều quan trọng với bạn</h2>
+                <div class="collections-head">
+                    <span class="eyebrow">Khám phá theo nhu cầu sống</span>
+                    <h2>Bắt đầu từ điều bạn cần nhất.</h2>
+                    <p class="collections-copy">Một vài hướng chọn nhanh để đưa bạn đến danh sách phù hợp.</p>
                 </div>
-                <div class="discovery-grid">
-                    <a href="#danh-sach" class="discovery-chip" data-filter="center">
-                        <span class="chip-icon">
+                <div class="collections-grid">
+                    <button type="button" class="collection-card" data-collection-kind="center" aria-label="Gần trung tâm — Ưu tiên kết nối thuận tiện trong thành phố.">
+                        <span class="chip-icon" aria-hidden="true">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="1.5"></rect><path d="M9 21v-4h6v4"></path><path d="M8 7h2"></path><path d="M8 11h2"></path><path d="M14 7h2"></path><path d="M14 11h2"></path></svg>
                         </span>
-                        <span class="chip-body">
-                            <strong>Gần trung tâm</strong>
-                            <small>Căn hộ tại Phú Hội, Vĩnh Ninh, An Cựu</small>
+                        <span class="collection-body">
+                            <strong class="collection-title">Gần trung tâm</strong>
+                            <span class="collection-desc">Ưu tiên kết nối thuận tiện trong thành phố.</span>
+                            <span class="collection-cta">Khám phá lựa chọn &rarr;</span>
                         </span>
-                    </a>
-                    <a href="#danh-sach" class="discovery-chip" data-filter="light">
-                        <span class="chip-icon">
+                    </button>
+                    <button type="button" class="collection-card" data-collection-kind="light" aria-label="Nhiều ánh sáng — Không gian thoáng, có cửa sổ hoặc ban công.">
+                        <span class="chip-icon" aria-hidden="true">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="M4.9 4.9l1.4 1.4"></path><path d="M17.7 17.7l1.4 1.4"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="M4.9 19.1l1.4-1.4"></path><path d="M17.7 6.3l1.4-1.4"></path></svg>
                         </span>
-                        <span class="chip-body">
-                            <strong>Nhiều ánh sáng</strong>
-                            <small>Không gian cửa sổ lớn, đón sáng</small>
+                        <span class="collection-body">
+                            <strong class="collection-title">Nhiều ánh sáng</strong>
+                            <span class="collection-desc">Không gian thoáng, có cửa sổ hoặc ban công.</span>
+                            <span class="collection-cta">Khám phá lựa chọn &rarr;</span>
                         </span>
-                    </a>
-                    <a href="#danh-sach" class="discovery-chip" data-filter="family">
-                        <span class="chip-icon">
+                    </button>
+                    <button type="button" class="collection-card" data-collection-kind="family" aria-label="Phù hợp gia đình — Không gian rộng rãi cho nhịp sống chung.">
+                        <span class="chip-icon" aria-hidden="true">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.9"></path><path d="M16 3.1a4 4 0 0 1 0 7.8"></path></svg>
                         </span>
-                        <span class="chip-body">
-                            <strong>Không gian cho gia đình</strong>
-                            <small>Villa và căn hộ từ 3 phòng ngủ</small>
+                        <span class="collection-body">
+                            <strong class="collection-title">Phù hợp gia đình</strong>
+                            <span class="collection-desc">Không gian rộng rãi cho nhịp sống chung.</span>
+                            <span class="collection-cta">Khám phá lựa chọn &rarr;</span>
                         </span>
-                    </a>
+                    </button>
+                    <button type="button" class="collection-card" data-collection-kind="available" aria-label="Có thể nhận nhà sớm — Những căn đang mở để bạn bắt đầu sớm.">
+                        <span class="chip-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2l-2 2m-7.6 7.6a5.5 5.5 0 1 1-7.78 7.78 5.5 5.5 0 0 1 7.78-7.78zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path></svg>
+                        </span>
+                        <span class="collection-body">
+                            <strong class="collection-title">Có thể nhận nhà sớm</strong>
+                            <span class="collection-desc">Những căn đang mở để bạn bắt đầu sớm.</span>
+                            <span class="collection-cta">Khám phá lựa chọn &rarr;</span>
+                        </span>
+                    </button>
                 </div>
             </div>
         </section>
@@ -696,6 +710,7 @@
     <script src="js/listings.js"></script>
     <script src="js/favorites.js"></script>
     <script src="js/filters.js"></script>
+    <script src="js/collections.js"></script>
     <script src="js/concierge.js"></script>
     <script src="js/compare.js"></script>
     <script src="js/detail.js"></script>

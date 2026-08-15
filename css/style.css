@@ -3648,6 +3648,111 @@ body.visit-open {
     }
 }
 
+/* ========== Living Collections (bộ sưu tập theo nhu cầu sống) ========== */
+.collections-head {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 30px;
+}
+
+.collections-head h2 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.8rem;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+}
+
+.collections-copy {
+    font-size: 0.95rem;
+    color: var(--muted);
+    max-width: 520px;
+}
+
+.collections-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+}
+
+.collection-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+    text-align: left;
+    background: #FFFFFF;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 22px;
+    color: var(--ink);
+    font-family: var(--font-body);
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s, background 0.2s;
+}
+
+.collection-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+    border-color: rgba(201, 86, 75, 0.35);
+}
+
+.collection-card:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+    border-color: rgba(201, 86, 75, 0.35);
+}
+
+.collection-card.is-active {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+    transform: translateY(-2px);
+}
+
+.collection-body {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.collection-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--ink);
+}
+
+.collection-desc {
+    font-size: 0.84rem;
+    color: var(--muted);
+    line-height: 1.5;
+}
+
+.collection-cta {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin-top: 4px;
+}
+
+@media (max-width: 1023px) {
+    .collections-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 767px) {
+    .collections-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .collections-head h2 {
+        font-size: 1.55rem;
+    }
+}
+
 /* ========== Reduced motion ========== */
 @media (prefers-reduced-motion: reduce) {
     html {
