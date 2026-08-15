@@ -378,10 +378,53 @@
             </div>
         </section>
 
-        <section class="concierge">
+        <section class="concierge" id="conciergeSection">
             <div class="container concierge-inner">
                 <h2>Chưa rõ căn nào hợp với bạn?</h2>
-                <a href="#danh-sach" class="btn btn-coral btn-lg" data-filter="all">Khám phá không gian phù hợp</a>
+                <p class="concierge-desc">Chọn một vài ưu tiên, HueStay sẽ đưa bạn đến danh sách phù hợp.</p>
+                <button type="button" class="btn btn-coral btn-lg" data-concierge-start>Bắt đầu phiếu tìm nơi ở</button>
+
+                <div class="concierge-panel" id="conciergePanel" hidden>
+                    <p class="concierge-progress" aria-live="polite">Bước 1/2</p>
+
+                    <div class="concierge-question" id="conciergeStep1">
+                        <p class="concierge-label">Bước 1 — Điều gì quan trọng nhất với bạn?</p>
+                        <div class="concierge-options">
+                            <button type="button" class="concierge-option" data-concierge-kind="Căn hộ" aria-pressed="false">Căn hộ tiện nghi</button>
+                            <button type="button" class="concierge-option" data-concierge-kind="Villa" aria-pressed="false">Villa riêng tư</button>
+                            <button type="button" class="concierge-option" data-concierge-kind="available" aria-pressed="false">Có thể nhận nhà sớm</button>
+                            <button type="button" class="concierge-option" data-concierge-kind="center" aria-pressed="false">Gần trung tâm</button>
+                            <button type="button" class="concierge-option" data-concierge-kind="light" aria-pressed="false">Nhiều ánh sáng</button>
+                            <button type="button" class="concierge-option" data-concierge-kind="family" aria-pressed="false">Phù hợp gia đình</button>
+                        </div>
+                        <p class="concierge-hint">Bạn có thể thay đổi bộ lọc chi tiết ở danh sách sau.</p>
+                    </div>
+
+                    <div class="concierge-question" id="conciergeStep2" hidden>
+                        <p class="concierge-label">Bước 2 — Ngân sách thuê / tháng của bạn?</p>
+                        <div class="concierge-options">
+                            <button type="button" class="concierge-option" data-concierge-price="" aria-pressed="false">Không giới hạn</button>
+                            <button type="button" class="concierge-option" data-concierge-price="under_10" aria-pressed="false">Dưới 10 triệu</button>
+                            <button type="button" class="concierge-option" data-concierge-price="10_15" aria-pressed="false">10 – 15 triệu</button>
+                            <button type="button" class="concierge-option" data-concierge-price="15_20" aria-pressed="false">15 – 20 triệu</button>
+                            <button type="button" class="concierge-option" data-concierge-price="20_30" aria-pressed="false">20 – 30 triệu</button>
+                            <button type="button" class="concierge-option" data-concierge-price="over_30" aria-pressed="false">Trên 30 triệu</button>
+                        </div>
+                    </div>
+
+                    <div class="concierge-actions">
+                        <button type="button" class="btn btn-outline" data-concierge-reset>Làm lại</button>
+                        <button type="button" class="btn btn-coral" data-concierge-apply disabled>Xem gợi ý phù hợp</button>
+                    </div>
+                </div>
+
+                <div class="concierge-done" id="conciergeDone" hidden>
+                    <p class="concierge-done-text">Đã cập nhật gợi ý theo ưu tiên của bạn.</p>
+                    <div class="concierge-actions">
+                        <button type="button" class="btn btn-outline" data-concierge-edit>Điều chỉnh lại</button>
+                        <button type="button" class="btn btn-coral" data-concierge-view-results>Xem danh sách</button>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -554,6 +597,7 @@
     <script src="js/listings.js"></script>
     <script src="js/favorites.js"></script>
     <script src="js/filters.js"></script>
+    <script src="js/concierge.js"></script>
     <script src="js/compare.js"></script>
     <script src="js/detail.js"></script>
     <script src="js/inquiry.js"></script>

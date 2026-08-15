@@ -5,25 +5,23 @@
 
 ## Tổng quan trạng thái
 
-- **Giai đoạn**: Refactor module ĐÃ XONG + Gói nghiệp vụ frontend ĐÃ XONG (đã verify)
-  + Redesign UI "Hue Stay Marketplace" ĐÃ XONG (đã verify, chưa commit)
-  + Vòng visual polish ĐÃ XONG (đã verify, chưa commit)
-  + Feature lọc theo ngân sách (budget price filter) ĐÃ XONG (đã verify, chưa commit).
-  Còn lại: "quality polish" (Ưu tiên 2) chưa làm.
-- **Trạng thái git**: nhánh `developer`, đồng bộ `origin/developer`. Đã có commits:
-  `031ccbd` (Initial) → `56baa3f` (gói nghiệp vụ) → `3456e44` (fix modal overlap) → `4a64b02` (routing).
-  Working tree: `css/style.css` + `index.html` + `js/compare.js` + `js/filters.js` + `PROGRESS.md`,
-  CHƯA commit.
+- **Giai đoạn**: Refactor module ĐÃ XONG + Gói nghiệp vụ frontend ĐÃ XONG + Redesign UI
+  "Hue Stay Marketplace" ĐÃ XONG + Vòng visual polish ĐÃ XONG + Feature lọc theo ngân sách ĐÃ XONG —
+  TẤT CẢ đã commit trong `701a717` (đã verify). Còn lại: "quality polish" (Ưu tiên 2) chưa làm.
+- **Trạng thái git**: nhánh `developer`, đồng bộ `origin/developer`. HEAD = `701a717`
+  `feat: refine Hue Stay marketplace and add budget filtering`. Thứ tự commits:
+  `031ccbd` → `56baa3f` → `3456e44` → `4a64b02` → `701a717`.
+  Working tree TRƯỚC task "Phiếu tìm nơi ở" là CLEAN.
 - **Môi trường**: không internet, không browser → verify bằng `node --check` + smoke test vm.
 
 ## Kiến trúc hiện tại (ĐANG CHẠY)
 
 Thứ tự script (`index.html` cuối body):
-`properties.js → ui.js → listings.js → favorites.js → filters.js → compare.js → detail.js → inquiry.js → main.js`
+`properties.js → ui.js → listings.js → favorites.js → filters.js → concierge.js → compare.js → detail.js → inquiry.js → main.js`
 
-Chuỗi phụ thuộc: `properties → ui → listings → favorites → filters → compare → detail → inquiry → main`.
-`window.UI`, `window.Listings`, `window.Favorites`, `window.Filters`, `window.Compare`,
-`window.Detail`, `window.Inquiry` gán tại parse-time (cuối IIFE).
+Chuỗi phụ thuộc: `properties → ui → listings → favorites → filters → concierge → compare → detail → inquiry → main`.
+`window.UI`, `window.Listings`, `window.Favorites`, `window.Filters`, `window.Concierge`,
+`window.Compare`, `window.Detail`, `window.Inquiry` gán tại parse-time (cuối IIFE).
 `window.Detail` gồm `openProperty(id)`, `closeDetail()`, `syncRoute()`.
 
 ## Đã hoàn thành
@@ -127,8 +125,9 @@ Chuỗi phụ thuộc: `properties → ui → listings → favorites → filters
   (đầy đủ 18 section, kể cả routing); grep xác nhận 55 ID contract + các attr (`data-filter`, `data-compare`,
   `data-cat`, `data-property`, `data-compare-close`, `data-inquiry-close`, `dtLoc`...) còn nguyên;
   hero-slide ×3, nav-link ×4; CSS brace 409/409 balanced; `git diff --check` OK.
-- **Git**: chưa commit. (Lưu ý: commit `4a64b02 fix: sync property detail with browser history` đã
-  chứa phần routing của mục 4 — thứ tự commit hiện tại: `031ccbd` → `56baa3f` → `3456e44` → `4a64b02`.)
+- **Git**: đã commit trong `701a717` (gộp cùng mục 6 và 7). (Lưu ý: commit `4a64b02 fix: sync
+  property detail with browser history` chứa phần routing của mục 4 — thứ tự commit hiện tại:
+  `031ccbd` → `56baa3f` → `3456e44` → `4a64b02` → `701a717`.)
 
 ### 6. Vòng visual polish (sau redesign, chỉ UI + 1 thay đổi JS tối thiểu)
 - **A. Header "Đã lưu" (#favToggle)**: trước đây KHÔNG có CSS riêng → heart to/đen, chữ dồn.
@@ -158,6 +157,7 @@ Chuỗi phụ thuộc: `properties → ui → listings → favorites → filters
 - **Verify**: `node --check` sạch 9 file JS; CSS brace 429/429 balanced; `git diff --check` OK (chỉ
   warning LF/CRLF); `verify_listings.js` pass (counts 10/7/4/3 + cardHTML contract); `verify_integration.js`
   pass đủ 18 section (body stub có `classList` nên class mới không crash). Working tree chưa commit.
+  → Đã commit trong `701a717`.
 
 ### 7. Feature: lọc theo ngân sách thuê / tháng (budget price filter)
 - **Yêu cầu**: thêm lọc giá theo 5 khoảng cố định, single-select (bấm lại để bỏ chọn),
@@ -201,8 +201,52 @@ Chuỗi phụ thuộc: `properties → ui → listings → favorites → filters
   `?price=abc` và `?price=999` → "" không crash).
 - **Verify**: `node --check` sạch 9 file; `git diff --check` OK (chỉ warning LF/CRLF);
   `verify_listings.js` pass; `verify_integration.js` pass đủ 20 section ("smoke test done").
-  Working tree chưa commit. (Caveat: smoke test stub — event target phải có `closest` như `tgt()`;
+  → Đã commit trong `701a717`. (Caveat: smoke test stub — event target phải có `closest` như `tgt()`;
   inline object literal trong 1 trường hợp bị mất thuộc tính khi chạy trong harness → dùng `tgt()`.)
+
+### 8. Feature: "Phiếu tìm nơi ở trong 60 giây" (Home Finder questionnaire, UI hướng dẫn inline)
+- **Yêu cầu**: bổ sung module `js/concierge.js` (IIFE, nạp SAU `filters.js`, TRƯỚC `compare.js`) +
+  section hướng dẫn inline (không modal/overlay) ở cuối home view. User chọn 1 ưu tiên (bắt buộc),
+  bước 2 tùy chọn chọn mức giá → "Xem gợi ý phù hợp" áp dụng lọc qua API nguyên tử mới. KHÔNG modal,
+  KHÔNG duplicate logic lọc/giá, KHÔNG sửa `properties.js`, không đổi search/tabs/special/sort/saved/
+  routing/favorites/compare/detail/inquiry. Giữ nguyên mọi ID/data-attribute cũ.
+- **`js/filters.js`** — thêm 2 API công khai (KHÔNG đổi `getState()`, `PRICE_RANGES`, `priceNum()`,
+  sort logic, card rendering):
+  - `Filters.applyDiscovery(kind, range)`: kind hợp lệ = `"Căn hộ","Villa","available","center","light",
+    "family","all"` (không hợp lệ ⇒ `"all"`); range chỉ nhận qua `priceRangeByValue()` (rỗng/không hợp lệ
+    ⇒ `""`). Set filter + priceRange CÙNG LÚC + `savedView=false`, gọi `apply(true)` MỘT LẦN
+    (KHÔNG `setFilter()` rồi `setPriceRange()` — render 2 lần). Dùng lại `syncUrl()` (giữ `q`/`sort`/hash).
+  - `Filters.getDiscoveryState()` (read-only) → `{ kind, priceRange }`: `savedView` ⇒ `"saved"`,
+    else special hoặc category hoặc `"all"` + `priceRange` hiện tại.
+- **`js/concierge.js`** (module mới): chỉ dùng `window.Filters`; tự sở hữu UI state tạm
+  (`selectedKind`, `selectedPrice`, `opened`/`completed`); KHÔNG render card, KHÔNG duplicate logic giá.
+  Delegation phạm vi section `[data-concierge-start]` `[data-concierge-kind]` `[data-concierge-price]`
+  `[data-concierge-apply]` `[data-concierge-reset]` `[data-concierge-edit]`
+  `[data-concierge-view-results]`; no-op an toàn khi section vắng. Auto-advance sang bước 2 sau khi
+  chọn ưu tiên; nút apply disabled khi chưa có `selectedKind`; apply chỉ gọi
+  `Filters.applyDiscovery(selectedKind, selectedPrice)` rồi hiện state hoàn thành; reset về bước 1,
+  KHÔNG đổi lọc hiện tại của list; view-results chỉ smooth-scroll `#danh-sach`; reload prefill từ
+  `getDiscoveryState()` nếu hợp lệ nhưng KHÔNG tự mở trừ khi URL có param `filter`/`price`
+  (regex `/[?&](filter|price)=/`). Chỉ phơi `window.Concierge = { open, reset, getState }`.
+- **`index.html`**: section cũ (h2 "Chưa rõ căn nào hợp với bạn?" + CTA anchor) thành panel hướng dẫn:
+  collapsed = title + desc "Chọn một vài ưu tiên, HueStay sẽ đưa bạn đến danh sách phù hợp." + nút
+  "Bắt đầu phiếu tìm nơi ở"; khi mở hiện "Bước 1/2" (6 nút ưu tiên: "Căn hộ tiện nghi"=`Căn hộ`,
+  "Villa riêng tư"=`Villa`, "Có thể nhận nhà sớm"=`available`, "Gần trung tâm"=`center`,
+  "Nhiều ánh sáng"=`light`, "Phù hợp gia đình"=`family`) + "Bước 2/2" (6 mức giá: "Không giới hạn"=`""`,
+  "Dưới 10 triệu"=`under_10`, "10 – 15 triệu"=`10_15`, "15 – 20 triệu"=`15_20`,
+  "20 – 30 triệu"=`20_30`, "Trên 30 triệu"=`over_30`) + footer "Làm lại" / "Xem gợi ý phù hợp";
+  sau apply: "Đã cập nhật gợi ý theo ưu tiên của bạn." + "Điều chỉnh lại" + "Xem danh sách".
+  Thêm script tag `concierge.js` giữa `filters.js` và `compare.js`.
+- **`css/style.css`** (CHỈ thêm, không sửa CSS cũ): card gọn nền sáng, nút option ≥44px
+  (focus/active rõ ràng), progress, grid options 2 cột desktop / 1 cột tại 390px (@480px),
+  không tràn ngang.
+- **`verify_integration.js`** (mở rộng): thêm `concierge.js` vào `SCRIPTS`; stub `conciergeSection`
+  + `conciergePanel/Step1/Step2/Done` + querySelector/querySelectorAll override; thêm section 21:
+  apply disabled khi chưa chọn ưu tiên; "Căn hộ" + `10_15` → cat Căn hộ, price 10_15, 4 card;
+  center + không chọn giá → filter center, price ""; reset chỉ đổi UI (list giữ nguyên); reload
+  URL hợp lệ `?filter=center&price=10_15` → prefill + auto-open; reload URL không hợp lệ
+  `?filter=abc&price=xyz` → không crash, collapsed.
+- **Trạng thái**: ĐANG LÀM (chưa commit — chờ review Live Server).
 
 ## Còn lại — Ưu tiên 2: Vòng "quality polish" (từng được yêu cầu, chưa làm)
 Breadcrumb có "Khám phá"; back button giữ nguyên bộ lọc; thẻ quick-facts;
@@ -220,8 +264,9 @@ results count theo ngữ cảnh lọc (đã theo list dài, còn empty state). �
 ## Cách verify khi làm tiếp
 1. Syntax (PowerShell không mở rộng glob — chạy từng file): `node --check js\data\properties.js`,
    `node --check js\ui.js`, `node --check js\listings.js`, `node --check js\favorites.js`,
-   `node --check js\filters.js`, `node --check js\compare.js`, `node --check js\detail.js`,
-   `node --check js\inquiry.js`, `node --check js\main.js`; sau đó `git diff --check`.
+   `node --check js\filters.js`, `node --check js\concierge.js`, `node --check js\compare.js`,
+   `node --check js\detail.js`, `node --check js\inquiry.js`, `node --check js\main.js`;
+   sau đó `git diff --check`.
 2. `node C:\SQL_SE~1\opencode\verify_listings.js`
 3. `node C:\SQL_SE~1\opencode\verify_integration.js` (cập nhật nếu thêm module/ID mới)
 4. Grep: không còn tham chiếu module cũ sót; `properties.js` & CSS cũ không đổi nội dung.

@@ -1555,6 +1555,114 @@ button {
     color: var(--ink);
 }
 
+.concierge-desc {
+    max-width: 560px;
+    margin: 0;
+    color: var(--text);
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.concierge-panel,
+.concierge-done {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    width: 100%;
+    max-width: 720px;
+    padding: 28px;
+    text-align: left;
+    background: #FFFFFF;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 10px 30px rgba(22, 36, 58, 0.06);
+}
+
+.concierge-progress {
+    margin: 0;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+}
+
+.concierge-label {
+    margin: 0 0 12px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.15rem;
+    color: var(--ink);
+}
+
+.concierge-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.concierge-option {
+    min-height: 44px;
+    padding: 0 16px;
+    border: 1.5px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: #FFFFFF;
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-align: left;
+    cursor: pointer;
+    transition: color 0.2s, background 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+
+.concierge-option:hover {
+    border-color: var(--accent);
+    color: var(--ink);
+}
+
+.concierge-option:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px var(--accent-soft);
+    border-color: var(--accent);
+}
+
+.concierge-option.active {
+    background: var(--accent-soft);
+    border-color: var(--accent);
+    color: var(--accent-dark);
+}
+
+.concierge-hint {
+    margin: 12px 0 0;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: var(--muted);
+}
+
+.concierge-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+.concierge .btn[disabled] {
+    opacity: 0.55;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.concierge-done-text {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: var(--ink);
+    text-align: center;
+}
+
 /* ========== Footer ========== */
 .footer {
     background: var(--ink);
@@ -2845,6 +2953,15 @@ body.compare-open {
 
     .discovery-chip {
         flex: 0 0 86%;
+    }
+
+    .concierge-panel,
+    .concierge-done {
+        padding: 20px 16px;
+    }
+
+    .concierge-options {
+        grid-template-columns: 1fr;
     }
 }
 

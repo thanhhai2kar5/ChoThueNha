@@ -141,6 +141,32 @@
         apply(false);
     }
 
+    var DISCOVERY_KINDS = ["Căn hộ", "Villa", "available", "center", "light", "family", "all"];
+
+    function applyDiscovery(kind, range) {
+        kind = DISCOVERY_KINDS.indexOf(kind) === -1 ? "all" : kind;
+        savedView = false;
+        L.setFilter(kind);
+        priceRange = priceRangeByValue(range) ? range : "";
+        apply(true);
+    }
+
+    function getDiscoveryState() {
+        if (!L) return { kind: "all", priceRange: priceRange };
+        var st = L.getState();
+        var kind;
+        if (savedView) {
+            kind = "saved";
+        } else if (st.special) {
+            kind = st.special;
+        } else if (st.cat && st.cat !== "all") {
+            kind = st.cat;
+        } else {
+            kind = "all";
+        }
+        return { kind: kind, priceRange: priceRange };
+    }
+
     function renderPriceButtons() {
         if (!priceWrap) return;
         var btns = priceWrap.querySelectorAll("[data-price-range]");
@@ -281,6 +307,8 @@
         setSearch: setSearch,
         setSort: setSort,
         setPriceRange: setPriceRange,
+        applyDiscovery: applyDiscovery,
+        getDiscoveryState: getDiscoveryState,
         clearAll: clearAll,
         getState: function () {
             return { q: q, sort: sort, priceRange: priceRange, savedView: savedView };
